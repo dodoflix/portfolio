@@ -241,6 +241,14 @@ importers:
         specifier: ^5.1.4
         version: 5.1.4(webpack@5.103.0)
 
+  libs/shared/data-access:
+    dependencies:
+      '@swc/helpers':
+        specifier: ~0.5.11
+        version: 0.5.15
+
+  libs/shared/ui: {}
+
 packages:
 
   '@angular-devkit/core@19.2.17':

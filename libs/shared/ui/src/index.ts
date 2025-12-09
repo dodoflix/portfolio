@@ -1,1 +1,5 @@
-export * from './lib/ui';
+// Utils
+export * from './lib/utils';
+
+// UI Components
+export * from './components/ui';

@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@portfolio/ui": ["libs/shared/ui/src/index.ts"],
+      "@portfolio/ui/*": ["libs/shared/ui/src/*"],
       "@portfolio/data-access": ["libs/shared/data-access/src/index.ts"]
     }
   },

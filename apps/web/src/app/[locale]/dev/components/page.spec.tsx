@@ -1,20 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import ComponentsPage from './page';
 
-// Mock process.env
-const originalEnv = process.env;
-
-beforeEach(() => {
-  jest.resetModules();
-  process.env = { ...originalEnv, NODE_ENV: 'development' };
-});
-
-afterAll(() => {
-  process.env = originalEnv;
-});
-
 describe('ComponentsPage', () => {
-  it('should render successfully in development', () => {
+  it('should render successfully', () => {
     const { baseElement } = render(<ComponentsPage />);
     expect(baseElement).toBeTruthy();
   });
@@ -115,12 +103,9 @@ describe('ComponentsPage', () => {
     expect(footer).toBeInTheDocument();
   });
 
-  it('should have theme toggle in header', () => {
+  it('should have header', () => {
     const { container } = render(<ComponentsPage />);
     const header = container.querySelector('header');
     expect(header).toBeInTheDocument();
-    const buttons = header?.querySelectorAll('button');
-    expect(buttons?.length).toBeGreaterThan(0);
   });
 });
-

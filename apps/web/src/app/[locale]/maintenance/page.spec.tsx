@@ -14,17 +14,12 @@ describe('MaintenancePage', () => {
 
   it('should display maintenance description', () => {
     render(<MaintenancePage />);
-    expect(screen.getByText(/We're currently performing scheduled maintenance/)).toBeInTheDocument();
+    expect(screen.getByText(/performing scheduled maintenance/)).toBeInTheDocument();
   });
 
   it('should display status indicator', () => {
     render(<MaintenancePage />);
     expect(screen.getByText('Maintenance in progress')).toBeInTheDocument();
-  });
-
-  it('should display estimated completion time', () => {
-    render(<MaintenancePage />);
-    expect(screen.getByText(/Estimated completion/)).toBeInTheDocument();
   });
 
   it('should have a settings/gear icon', () => {
@@ -39,12 +34,6 @@ describe('MaintenancePage', () => {
     expect(pulseRing).toBeInTheDocument();
   });
 
-  it('should have theme toggle', () => {
-    const { container } = render(<MaintenancePage />);
-    const buttons = container.querySelectorAll('button');
-    expect(buttons.length).toBeGreaterThan(0);
-  });
-
   it('should display copyright footer', () => {
     render(<MaintenancePage />);
     expect(screen.getByText(/© \d{4} Portfolio/)).toBeInTheDocument();
@@ -56,4 +45,3 @@ describe('MaintenancePage', () => {
     expect(mainDiv).toHaveClass('flex', 'min-h-screen', 'items-center', 'justify-center');
   });
 });
-

@@ -7,6 +7,10 @@
     ".": {
       "import": "./index.mjs",
       "require": "./index.js"
+    },
+    "./testing": {
+      "import": "./testing/index.mjs",
+      "require": "./testing/index.js"
     }
   }
 }

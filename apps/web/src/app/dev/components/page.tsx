@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Accordion,
   AccordionContent,
@@ -88,18 +88,6 @@ export default function ComponentsPage() {
   const [sliderValue, setSliderValue] = useState([50]);
   const [checked, setChecked] = useState(false);
   const [switchOn, setSwitchOn] = useState(false);
-
-  // Only allow in development
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'production') {
-      window.location.href = '/';
-    }
-  }, []);
-
-  // Don't render in production
-  if (process.env.NODE_ENV === 'production') {
-    return null;
-  }
 
   return (
     <TooltipProvider>

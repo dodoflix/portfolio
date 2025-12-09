@@ -1,5 +1,14 @@
 packages:
-  - 'apps/*'
-  - 'libs/**/*'
+  - apps/*
+  - libs/**/*
 
 autoInstallPeers: true
+
+onlyBuiltDependencies:
+  - '@nestjs/core'
+  - '@parcel/watcher'
+  - '@swc/core'
+  - esbuild
+  - nx
+  - sharp
+  - unrs-resolver

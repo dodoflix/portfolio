@@ -1,0 +1,103 @@
+{
+  "metadata": {
+    "title": "Dogukan Metan - Portfolio",
+    "description": "Full Stack Developer crafting elegant solutions"
+  },
+  "nav": {
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Available for work",
+    "greeting": "Hi, I'm",
+    "name": "Dogukan Metan",
+    "roles": {
+      "developer": "Full Stack Developer",
+      "designer": "UI/UX Enthusiast",
+      "solver": "Problem Solver",
+      "explorer": "Tech Explorer"
+    },
+    "description": "I craft elegant solutions to complex problems, building modern web applications with cutting-edge technologies and a passion for clean, maintainable code.",
+    "cta": {
+      "work": "View My Work",
+      "contact": "Get In Touch"
+    }
+  },
+  "about": {
+    "badge": "About Me",
+    "title": "Passionate about creating impactful digital experiences",
+    "description1": "With over 5 years of experience in software development, I specialize in building scalable web applications that make a difference. My journey began with a curiosity for how things work and evolved into a career dedicated to crafting exceptional user experiences.",
+    "description2": "I believe in writing clean, maintainable code and staying up-to-date with the latest technologies. When I'm not coding, you'll find me exploring new frameworks, contributing to open source, or sharing knowledge with the developer community.",
+    "more": "+{count} more",
+    "yearsExperience": "Years Experience",
+    "projectsCompleted": "Projects Completed"
+  },
+  "projects": {
+    "badge": "Projects",
+    "title": "Featured Work",
+    "description": "A selection of projects I've worked on recently",
+    "viewAll": "View All Projects",
+    "items": {
+      "alpha": {
+        "title": "Project Alpha",
+        "description": "A modern web application built with Next.js and TypeScript featuring real-time updates and seamless user experience."
+      },
+      "beta": {
+        "title": "Project Beta",
+        "description": "Full-stack e-commerce platform with payment integration, inventory management, and analytics dashboard."
+      },
+      "gamma": {
+        "title": "Project Gamma",
+        "description": "Mobile-first progressive web app with offline support and push notifications for enhanced engagement."
+      }
+    }
+  },
+  "skills": {
+    "badge": "Skills",
+    "title": "Technical Expertise",
+    "description": "Technologies and tools I work with"
+  },
+  "contact": {
+    "badge": "Contact",
+    "title": "Let's Work Together",
+    "description": "Have a project in mind? I'd love to hear about it. Drop me a message and let's create something amazing together.",
+    "email": "Send Email",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "Sorry, we couldn't find the page you're looking for.",
+    "backHome": "Back to Home"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "An unexpected error has occurred. Please try again.",
+    "tryAgain": "Try again"
+  },
+  "maintenance": {
+    "title": "Under Maintenance",
+    "description": "We're currently performing scheduled maintenance. We'll be back shortly.",
+    "backHome": "Go home"
+  },
+  "offline": {
+    "title": "You're Offline",
+    "description": "It looks like you've lost your internet connection. Please check your connection and try again.",
+    "tryAgain": "Try again",
+    "backHome": "Go home",
+    "tips": {
+      "title": "While you're offline:",
+      "wifi": "Check your Wi-Fi connection",
+      "router": "Try restarting your router",
+      "airplane": "Make sure airplane mode is off"
+    }
+  }
+}
+

@@ -1,0 +1,103 @@
+{
+  "metadata": {
+    "title": "Doğukan Metan - Portföy",
+    "description": "Zarif çözümler üreten Full Stack Geliştirici"
+  },
+  "nav": {
+    "about": "Hakkımda",
+    "projects": "Projeler",
+    "skills": "Yetenekler",
+    "contact": "İletişim"
+  },
+  "hero": {
+    "badge": "İş için müsaitim",
+    "greeting": "Merhaba, ben",
+    "name": "Doğukan Metan",
+    "roles": {
+      "developer": "Full Stack Geliştirici",
+      "designer": "UI/UX Tutkunu",
+      "solver": "Problem Çözücü",
+      "explorer": "Teknoloji Kaşifi"
+    },
+    "description": "Karmaşık problemlere zarif çözümler üretiyorum, modern web uygulamaları geliştirirken en son teknolojileri ve temiz, sürdürülebilir kod yazma tutkumu kullanıyorum.",
+    "cta": {
+      "work": "Çalışmalarımı Gör",
+      "contact": "İletişime Geç"
+    }
+  },
+  "about": {
+    "badge": "Hakkımda",
+    "title": "Etkileyici dijital deneyimler yaratma tutkusu",
+    "description1": "5 yılı aşkın yazılım geliştirme deneyimimle, fark yaratan ölçeklenebilir web uygulamaları geliştirme konusunda uzmanlaştım. Yolculuğum, işlerin nasıl çalıştığına dair merakımla başladı ve olağanüstü kullanıcı deneyimleri oluşturmaya adanmış bir kariyere dönüştü.",
+    "description2": "Temiz, sürdürülebilir kod yazmaya ve en son teknolojilerle güncel kalmaya inanıyorum. Kod yazmadığım zamanlarda, yeni framework'leri keşfediyor, açık kaynak projelere katkıda bulunuyor veya geliştirici topluluğuyla bilgi paylaşıyorum.",
+    "more": "+{count} daha",
+    "yearsExperience": "Yıl Deneyim",
+    "projectsCompleted": "Tamamlanan Proje"
+  },
+  "projects": {
+    "badge": "Projeler",
+    "title": "Öne Çıkan Çalışmalar",
+    "description": "Son zamanlarda üzerinde çalıştığım projelerden bir seçki",
+    "viewAll": "Tüm Projeleri Gör",
+    "items": {
+      "alpha": {
+        "title": "Proje Alpha",
+        "description": "Next.js ve TypeScript ile oluşturulmuş, gerçek zamanlı güncellemeler ve kesintisiz kullanıcı deneyimi sunan modern bir web uygulaması."
+      },
+      "beta": {
+        "title": "Proje Beta",
+        "description": "Ödeme entegrasyonu, envanter yönetimi ve analitik panosu içeren full-stack e-ticaret platformu."
+      },
+      "gamma": {
+        "title": "Proje Gamma",
+        "description": "Çevrimdışı destek ve gelişmiş etkileşim için push bildirimleri içeren mobil öncelikli progressive web uygulaması."
+      }
+    }
+  },
+  "skills": {
+    "badge": "Yetenekler",
+    "title": "Teknik Uzmanlık",
+    "description": "Çalıştığım teknolojiler ve araçlar"
+  },
+  "contact": {
+    "badge": "İletişim",
+    "title": "Birlikte Çalışalım",
+    "description": "Aklınızda bir proje mi var? Duymak isterim. Bana mesaj atın ve birlikte harika bir şeyler yaratalım.",
+    "email": "E-posta Gönder",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
+  },
+  "footer": {
+    "rights": "Tüm hakları saklıdır.",
+    "privacy": "Gizlilik",
+    "terms": "Şartlar"
+  },
+  "notFound": {
+    "title": "Sayfa Bulunamadı",
+    "description": "Üzgünüz, aradığınız sayfayı bulamadık.",
+    "backHome": "Ana Sayfaya Dön"
+  },
+  "error": {
+    "title": "Bir şeyler ters gitti",
+    "description": "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.",
+    "tryAgain": "Tekrar dene"
+  },
+  "maintenance": {
+    "title": "Bakım Çalışması",
+    "description": "Şu anda planlı bakım gerçekleştiriyoruz. Kısa süre içinde geri döneceğiz.",
+    "backHome": "Ana sayfaya git"
+  },
+  "offline": {
+    "title": "Çevrimdışısınız",
+    "description": "İnternet bağlantınız kesilmiş görünüyor. Lütfen bağlantınızı kontrol edip tekrar deneyin.",
+    "tryAgain": "Tekrar dene",
+    "backHome": "Ana sayfaya git",
+    "tips": {
+      "title": "Çevrimdışıyken:",
+      "wifi": "Wi-Fi bağlantınızı kontrol edin",
+      "router": "Router'ınızı yeniden başlatmayı deneyin",
+      "airplane": "Uçak modunun kapalı olduğundan emin olun"
+    }
+  }
+}
+

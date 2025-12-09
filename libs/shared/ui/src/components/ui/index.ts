@@ -23,4 +23,5 @@ export * from './textarea';
 export * from './theme-provider';
 export * from './theme-toggle';
 export * from './tooltip';
+export * from './language-switcher';
 

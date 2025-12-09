@@ -1,0 +1,36 @@
+# Commit Message Guidelines
+
+When generating commit messages, follow the Conventional Commits specification:
+
+Format: `<type>(<scope>): <subject>`
+
+Types:
+- feat: A new feature
+- fix: A bug fix
+- docs: Documentation changes
+- style: Code style changes (formatting, no code change)
+- refactor: Code refactoring
+- perf: Performance improvements
+- test: Adding or updating tests
+- build: Build system or dependencies
+- ci: CI configuration changes
+- chore: Other changes
+
+Scopes (optional):
+- web: Web application (Next.js)
+- api: API application (NestJS)
+- shared-ui: Shared UI library
+- shared-data-access: Shared data access library
+
+Rules:
+- Use lowercase for type and scope
+- Subject should be imperative mood ("add" not "added")
+- No period at the end of subject
+- Keep subject under 72 characters
+
+Examples:
+- feat(web): add user authentication flow
+- fix(api): resolve token expiration issue
+- docs: update contributing guidelines
+- chore: update dependencies
+

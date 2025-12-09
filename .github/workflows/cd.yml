@@ -36,11 +36,13 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          static_site_generator: next
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Enable static export
+        run: |
+          sed -i "s/nx: {},/output: 'export', nx: {},/" apps/web/next.config.js
 
       - name: Build with Nx
         run: pnpm nx build web
@@ -48,7 +50,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist/apps/web/.next
+          path: ./apps/web/out
 
   deploy:
     environment:

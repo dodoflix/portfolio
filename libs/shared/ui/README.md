@@ -1,7 +1,25 @@
-# ui
+# @portfolio/shared-ui
 
-This library was generated with [Nx](https://nx.dev).
+Shared React components.
 
-## Running unit tests
+## Usage
 
-Run `nx test ui` to execute the unit tests via [Vitest](https://vitest.dev/).
+```tsx
+import { Ui } from '@portfolio/shared-ui';
+```
+
+## Commands
+
+```bash
+pnpm nx test ui
+pnpm nx build ui
+pnpm nx lint ui
+```
+
+## Add Component
+
+```bash
+pnpm nx g @nx/react:component button --project=ui
+```
+
+Then export from `src/index.ts`.

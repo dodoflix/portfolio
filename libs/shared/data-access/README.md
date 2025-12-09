@@ -1,11 +1,21 @@
-# data-access
+# @portfolio/shared-data-access
 
-This library was generated with [Nx](https://nx.dev).
+Shared data fetching and utilities.
 
-## Building
+## Usage
 
-Run `nx build data-access` to build the library.
+```typescript
+import { dataAccess } from '@portfolio/shared-data-access';
+```
 
-## Running unit tests
+## Commands
 
-Run `nx test data-access` to execute the unit tests via [Jest](https://jestjs.io).
+```bash
+pnpm nx test data-access
+pnpm nx build data-access
+pnpm nx lint data-access
+```
+
+## Add Utility
+
+Create file in `src/lib/`, export from `src/index.ts`.

@@ -2,7 +2,10 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import ErrorPage from './error';
 
 // Mock console.error
-const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  function noop() {}
+);
 
 const mockError = new window.Error('Test error message');
 const mockReset = jest.fn();

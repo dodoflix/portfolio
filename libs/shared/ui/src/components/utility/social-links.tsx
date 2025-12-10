@@ -42,8 +42,7 @@ export const SocialLinks = forwardRef<HTMLDivElement, SocialLinksProps>(
         ref={ref}
         className={cn(
           'flex gap-4',
-          direction === 'column' ? 'flex-col' : 'flex-row flex-wrap sm:flex-nowrap',
-          direction === 'column' ? '' : 'items-center justify-center sm:justify-start',
+          direction === 'column' ? 'flex-col items-center' : 'flex-row flex-wrap justify-center',
           className
         )}
         {...props}

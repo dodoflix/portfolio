@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
 /**
@@ -49,7 +50,7 @@ export const ThemeToggle = () => (
 );
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => (
-  <>{children}</>
+  <div data-testid="theme-provider">{children}</div>
 );
 
 // Language Switcher
@@ -246,5 +247,5 @@ export const Skeleton = ({ className, ...props }: any) => (
 );
 
 // Utility function
-export const cn = (...classes: any[]) => classes.filter(Boolean).join(' ');
-
+export const cn = (...classes: (string | undefined | null | false)[]) => 
+  classes.filter(Boolean).join(' ');

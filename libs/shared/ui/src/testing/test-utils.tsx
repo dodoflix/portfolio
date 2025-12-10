@@ -5,10 +5,10 @@ import { render, RenderOptions } from '@testing-library/react';
 /**
  * Custom render function that wraps components with necessary providers
  */
-interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {}
+type CustomRenderOptions = Omit<RenderOptions, 'wrapper'>;
 
 const AllProviders = ({ children }: { children: React.ReactNode }) => {
-  return <>{children}</>;
+  return <div data-testid="test-wrapper">{children}</div>;
 };
 
 export const customRender = (
@@ -21,7 +21,9 @@ export * from '@testing-library/react';
 export { customRender as render };
 
 // Simple no-op function for mocks when jest isn't available
-const noop = () => {};
+const noop = (): void => {
+  // intentionally empty for mocking
+};
 
 /**
  * Mock for ResizeObserver - commonly needed for Radix UI components

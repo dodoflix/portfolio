@@ -1,79 +1,56 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Theme', () => {
-  test('toggle switches between light and dark', async ({ page }) => {
+  test('has theme toggle button', async ({ page }) => {
+    await page.goto('/');
+
+    const themeToggle = page.getByTestId('theme-toggle');
+    await expect(themeToggle).toBeVisible();
+  });
+
+  test('can switch to dark mode', async ({ page }) => {
     await page.goto('/');
 
     const html = page.locator('html');
     const themeToggle = page.getByTestId('theme-toggle');
 
-    // Check initial state
-    const hasDark = await html.evaluate((el) => el.classList.contains('dark'));
-
-    // Click toggle
+    // Open menu and click Dark
     await themeToggle.click();
+    await page.getByRole('menuitem', { name: 'Dark' }).click();
 
-    // Should have toggled
-    if (hasDark) {
-      await expect(html).not.toHaveClass(/dark/);
-    } else {
-      await expect(html).toHaveClass(/dark/);
-    }
-
-    // Click again
-    await themeToggle.click();
-
-    // Should be back to original
-    if (hasDark) {
-      await expect(html).toHaveClass(/dark/);
-    } else {
-      await expect(html).not.toHaveClass(/dark/);
-    }
-  });
-
-  test('dark mode applies dark class', async ({ page }) => {
-    await page.goto('/');
-
-    // Force dark mode via localStorage
-    await page.evaluate(() => {
-      localStorage.setItem('theme', 'dark');
-    });
-    await page.reload();
-
-    const html = page.locator('html');
     await expect(html).toHaveClass(/dark/);
   });
 
-  test('light mode removes dark class', async ({ page }) => {
+  test('can switch to light mode', async ({ page }) => {
     await page.goto('/');
 
-    // Force light mode via localStorage
-    await page.evaluate(() => {
-      localStorage.setItem('theme', 'light');
-    });
-    await page.reload();
-
     const html = page.locator('html');
+    const themeToggle = page.getByTestId('theme-toggle');
+
+    // Set dark first
+    await themeToggle.click();
+    await page.getByRole('menuitem', { name: 'Dark' }).click();
+    await expect(html).toHaveClass(/dark/);
+
+    // Then switch to light
+    await themeToggle.click();
+    await page.getByRole('menuitem', { name: 'Light' }).click();
     await expect(html).not.toHaveClass(/dark/);
   });
 
   test('theme persists after reload', async ({ page }) => {
     await page.goto('/');
 
-    const themeToggle = page.getByTestId('theme-toggle');
     const html = page.locator('html');
+    const themeToggle = page.getByTestId('theme-toggle');
 
-    // Check initial and toggle
-    const initialHasDark = await html.evaluate((el) => el.classList.contains('dark'));
+    // Set dark mode
     await themeToggle.click();
+    await page.getByRole('menuitem', { name: 'Dark' }).click();
+    await expect(html).toHaveClass(/dark/);
 
+    // Reload and check
     await page.reload();
-
-    // Should maintain toggled state
-    if (initialHasDark) {
-      await expect(html).not.toHaveClass(/dark/);
-    } else {
-      await expect(html).toHaveClass(/dark/);
-    }
+    await expect(html).toHaveClass(/dark/);
   });
 });

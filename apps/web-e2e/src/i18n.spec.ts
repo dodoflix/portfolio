@@ -15,10 +15,10 @@ test.describe('Internationalization', () => {
     const langSwitcher = page.getByTestId('language-switcher');
     await langSwitcher.click();
 
-    // Select Turkish
-    await page.click('[data-value="tr"]');
+    // Select Turkish (click on Türkçe text)
+    await page.getByText('Türkçe').click();
 
-    // URL should change
+    // URL should change to /tr
     await expect(page).toHaveURL(/\/tr/);
   });
 
@@ -36,4 +36,3 @@ test.describe('Internationalization', () => {
     await expect(html).toHaveAttribute('lang', 'en');
   });
 });
-

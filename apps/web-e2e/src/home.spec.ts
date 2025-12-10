@@ -56,26 +56,15 @@ test.describe('Home Page', () => {
   });
 
   test('nav links scroll to sections', async ({ page }) => {
-    // Click about link
     await page.click('nav a[href="#about"]');
     await expect(page.locator('#about')).toBeInViewport();
   });
 
-  test('theme toggle works', async ({ page }) => {
-    const html = page.locator('html');
+  test('theme toggle opens menu', async ({ page }) => {
     const themeToggle = page.getByTestId('theme-toggle');
-
-    // Check initial state and toggle
-    const hasDark = await html.evaluate((el) => el.classList.contains('dark'));
-
     await themeToggle.click();
 
-    // Theme should change
-    if (hasDark) {
-      await expect(html).not.toHaveClass(/dark/);
-    } else {
-      await expect(html).toHaveClass(/dark/);
-    }
+    // Menu should open with options
+    await expect(page.getByText('Dark')).toBeVisible();
   });
 });
-

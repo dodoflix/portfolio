@@ -33,7 +33,7 @@ export function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="h-9 w-9">
+        <Button variant="ghost" size="icon" className="h-9 w-9" data-testid="language-switcher">
           <span className="text-lg">{currentLanguage.flag}</span>
           <span className="sr-only">Switch language</span>
         </Button>

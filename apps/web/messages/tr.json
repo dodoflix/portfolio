@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Doğukan Metan",
-    "description": "Zarif çözümler üreten Full Stack Geliştirici"
+    "description": "Yazılım & DevOps Geliştirici"
   },
   "nav": {
     "about": "Hakkımda",
@@ -14,56 +14,56 @@
     "greeting": "Merhaba, ben",
     "name": "Doğukan Metan",
     "roles": {
-      "developer": "Full Stack Geliştirici",
-      "designer": "UI/UX Tutkunu",
-      "solver": "Problem Çözücü",
-      "explorer": "Teknoloji Kaşifi"
+      "software": "Yazılım Geliştirici",
+      "devops": "DevOps Mühendisi",
+      "architect": "Çözüm Mimarı",
+      "cloud": "Bulut Uzmanı"
     },
-    "description": "Karmaşık problemlere zarif çözümler üretiyorum, modern web uygulamaları geliştirirken en son teknolojileri ve temiz, sürdürülebilir kod yazma tutkumu kullanıyorum.",
+    "description": "Altyapı ve backend sistemleri geliştiriyorum. Kubernetes, AWS ve gece 3'te sistemlerin çökmemesi için çalışıyorum.",
     "cta": {
-      "work": "Çalışmalarımı Gör",
-      "contact": "İletişime Geç"
+      "work": "Çalışmalarım",
+      "contact": "İletişim"
     }
   },
   "about": {
     "badge": "Hakkımda",
-    "title": "Etkileyici dijital deneyimler yaratma tutkusu",
-    "description1": "5 yılı aşkın yazılım geliştirme deneyimimle, fark yaratan ölçeklenebilir web uygulamaları geliştirme konusunda uzmanlaştım. Yolculuğum, işlerin nasıl çalıştığına dair merakımla başladı ve olağanüstü kullanıcı deneyimleri oluşturmaya adanmış bir kariyere dönüştü.",
-    "description2": "Temiz, sürdürülebilir kod yazmaya ve en son teknolojilerle güncel kalmaya inanıyorum. Kod yazmadığım zamanlarda, yeni framework'leri keşfediyor, açık kaynak projelere katkıda bulunuyor veya geliştirici topluluğuyla bilgi paylaşıyorum.",
+    "title": "Sunucuları uslu tutuyorum",
+    "description1": "İstanbul'da yaşayan Yazılım & DevOps Geliştirici. Kubernetes, AWS ve backend mimarisi üzerine çalışıyorum. 50'den fazla şirketin kullandığı sistemler geliştirdim, günlük binlerce kullanıcıya hizmet veren altyapıları yönettim.",
+    "description2": "Bir şeyin ölçeklenmesi, ayakta kalması veya düzgün çalışması gerekiyorsa - işte o benim işim.",
     "more": "+{count} daha",
-    "yearsExperience": "Yıl Deneyim",
-    "projectsCompleted": "Tamamlanan Proje"
+    "yearsExperience": "Yıl",
+    "projectsCompleted": "Proje"
   },
   "projects": {
-    "badge": "Projeler",
-    "title": "Öne Çıkan Çalışmalar",
-    "description": "Son zamanlarda üzerinde çalıştığım projelerden bir seçki",
-    "viewAll": "Tüm Projeleri Gör",
+    "badge": "İşler",
+    "title": "Son Projeler",
+    "description": "Yaptığım bazı şeyler",
+    "viewAll": "Tümünü Gör",
     "items": {
       "alpha": {
-        "title": "Proje Alpha",
-        "description": "Next.js ve TypeScript ile oluşturulmuş, gerçek zamanlı güncellemeler ve kesintisiz kullanıcı deneyimi sunan modern bir web uygulaması."
+        "title": "HollyConnect",
+        "description": "Derimod, Jumbo, Karaca, EveShop, Kigili ve 45+ şirketin kullandığı entegrasyon platformu. 10+ Shopify eklentisi geliştirdim."
       },
       "beta": {
-        "title": "Proje Beta",
-        "description": "Ödeme entegrasyonu, envanter yönetimi ve analitik panosu içeren full-stack e-ticaret platformu."
+        "title": "Depo Yönetim Sistemi",
+        "description": "Dinçer Lojistik için özel WMS. Kullandıkları hazır çözüme göre maliyeti %50 düşürdü, performansı %70 artırdı."
       },
       "gamma": {
-        "title": "Proje Gamma",
-        "description": "Çevrimdışı destek ve gelişmiş etkileşim için push bildirimleri içeren mobil öncelikli progressive web uygulaması."
+        "title": "Docvivo Altyapısı",
+        "description": "%99 uptime ile tam on-premise kurulum. DevOps pipeline'ları, monitoring, her şey dahil."
       }
     }
   },
   "skills": {
     "badge": "Yetenekler",
-    "title": "Teknik Uzmanlık",
-    "description": "Çalıştığım teknolojiler ve araçlar"
+    "title": "Kullandıklarım",
+    "description": "Araçlar ve teknolojiler"
   },
   "contact": {
     "badge": "İletişim",
-    "title": "Birlikte Çalışalım",
-    "description": "Aklınızda bir proje mi var? Duymak isterim. Bana mesaj atın ve birlikte harika bir şeyler yaratalım.",
-    "email": "E-posta Gönder",
+    "title": "İletişime Geç",
+    "description": "Projen mi var? Altyapı yardımı mı lazım? Konuşalım.",
+    "email": "E-posta",
     "github": "GitHub",
     "linkedin": "LinkedIn"
   },
@@ -74,30 +74,29 @@
   },
   "notFound": {
     "title": "Sayfa Bulunamadı",
-    "description": "Üzgünüz, aradığınız sayfayı bulamadık.",
-    "backHome": "Ana Sayfaya Dön"
+    "description": "Bu sayfa yok.",
+    "backHome": "Ana Sayfa"
   },
   "error": {
-    "title": "Bir şeyler ters gitti",
-    "description": "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.",
+    "title": "Bir şeyler bozuldu",
+    "description": "Hata oluştu. Tekrar dene.",
     "tryAgain": "Tekrar dene"
   },
   "maintenance": {
-    "title": "Bakım Çalışması",
-    "description": "Şu anda planlı bakım gerçekleştiriyoruz. Kısa süre içinde geri döneceğiz.",
-    "backHome": "Ana sayfaya git"
+    "title": "Bakım",
+    "description": "Site bakımda. Yakında döneriz.",
+    "backHome": "Ana sayfa"
   },
   "offline": {
-    "title": "Çevrimdışısınız",
-    "description": "İnternet bağlantınız kesilmiş görünüyor. Lütfen bağlantınızı kontrol edip tekrar deneyin.",
+    "title": "Çevrimdışı",
+    "description": "İnternet bağlantısı yok.",
     "tryAgain": "Tekrar dene",
-    "backHome": "Ana sayfaya git",
+    "backHome": "Ana sayfa",
     "tips": {
-      "title": "Çevrimdışıyken:",
-      "wifi": "Wi-Fi bağlantınızı kontrol edin",
-      "router": "Router'ınızı yeniden başlatmayı deneyin",
-      "airplane": "Uçak modunun kapalı olduğundan emin olun"
+      "title": "Dene:",
+      "wifi": "Wi-Fi'ı kontrol et",
+      "router": "Router'ı yeniden başlat",
+      "airplane": "Uçak modunu kapat"
     }
   }
 }
-

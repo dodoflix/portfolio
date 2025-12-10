@@ -34,25 +34,26 @@ import {
 
 // Skills data (not translated - technical terms)
 const skills = [
-  { name: 'TypeScript', level: 95 },
-  { name: 'React / Next.js', level: 90 },
-  { name: 'Node.js', level: 85 },
-  { name: 'Tailwind CSS', level: 90 },
-  { name: 'PostgreSQL', level: 80 },
-  { name: 'Docker', level: 75 },
+  { name: 'Kubernetes', level: 90 },
+  { name: 'AWS / Cloud', level: 90 },
+  { name: 'Docker', level: 95 },
+  { name: 'TypeScript / Node.js', level: 85 },
+  { name: 'CI/CD Pipelines', level: 90 },
+  { name: 'Software Architecture', level: 85 },
 ];
 
 const techStack = [
-  'JavaScript', 'TypeScript', 'React', 'Next.js', 'Node.js', 'NestJS',
-  'Tailwind CSS', 'PostgreSQL', 'MongoDB', 'Redis', 'Docker', 'AWS',
-  'Git', 'GraphQL', 'REST APIs', 'Nx Monorepo',
+  'Kubernetes', 'Docker', 'AWS', 'Terraform', 'Linux',
+  'TypeScript', 'Node.js', 'NestJS', 'React', 'Next.js',
+  'PostgreSQL', 'MongoDB', 'Redis', 'Nginx',
+  'GitHub Actions', 'GitLab CI', 'Prometheus', 'Grafana',
 ];
 
-const projectImages = ['🚀', '🛒', '📱'];
+const projectImages = ['🔗', '📦', '🏗️'];
 const projectTags = [
-  ['Next.js', 'TypeScript', 'Tailwind'],
-  ['React', 'Node.js', 'PostgreSQL'],
-  ['PWA', 'Service Workers', 'IndexedDB'],
+  ['Shopify', 'Integration', 'Cloud'],
+  ['Node.js', 'On-Premise', 'WMS'],
+  ['DevOps', 'CI/CD', 'Infrastructure'],
 ];
 
 export default function HomePage() {
@@ -64,10 +65,10 @@ export default function HomePage() {
   }, []);
 
   const roles = [
-    t('hero.roles.developer'),
-    t('hero.roles.designer'),
-    t('hero.roles.solver'),
-    t('hero.roles.explorer'),
+    t('hero.roles.software'),
+    t('hero.roles.devops'),
+    t('hero.roles.architect'),
+    t('hero.roles.cloud'),
   ];
 
   const projects = [
@@ -97,17 +98,17 @@ export default function HomePage() {
   const socialLinks = [
     {
       name: t('contact.email'),
-      href: 'mailto:hello@example.com',
+      href: 'mailto:dogukanmetan@gmail.com',
       icon: <EmailIcon />,
     },
     {
       name: t('contact.github'),
-      href: 'https://github.com',
+      href: 'https://github.com/dodoflix',
       icon: <GitHubIcon />,
     },
     {
       name: t('contact.linkedin'),
-      href: 'https://linkedin.com',
+      href: 'https://linkedin.com/in/dogukan-metan',
       icon: <LinkedInIcon />,
     },
   ];

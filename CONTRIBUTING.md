@@ -181,8 +181,19 @@ This is an [Nx](https://nx.dev) monorepo with the following structure:
 | `apps/api` | NestJS backend API |
 | `apps/web-e2e` | Playwright E2E tests for web |
 | `apps/api-e2e` | Jest E2E tests for API |
-| `libs/shared/ui` | Shared UI components |
+| `libs/shared/ui` | Component library |
 | `libs/shared/data-access` | Shared data access utilities |
+
+##### UI Library
+
+Components organized in `libs/shared/ui/src/components/`:
+- `ui/` - Base (Button, Card, Dialog...)
+- `layout/` - Container, Section, PageLayout
+- `typography/` - Heading, Text, GradientText
+- `navigation/` - Navbar, Footer, NavLink
+- `content/` - Hero, ProjectCard, SkillBar
+- `status/` - StatusIcon, BigText
+- `utility/` - TypeWriter, FadeIn, Icon
 
 #### Running the Applications
 

@@ -14,13 +14,28 @@ pnpm nx serve api      # http://localhost:3000/api
 
 ```
 apps/
-  web/          → Next.js 16
-  api/          → NestJS 11
-  web-e2e/      → Playwright
-  api-e2e/      → Jest E2E
+├── web/              → Next.js 16
+├── api/              → NestJS 11
+├── web-e2e/          → Playwright
+└── api-e2e/          → Jest E2E
+
 libs/shared/
-  ui/           → React components
-  data-access/  → Shared utilities
+├── ui/               → Component library
+│   └── components/
+│       ├── ui/           → Button, Card, Dialog...
+│       ├── layout/       → Container, Section...
+│       ├── typography/   → Heading, Text...
+│       ├── navigation/   → Navbar, Footer...
+│       ├── content/      → Hero, ProjectCard...
+│       ├── status/       → StatusIcon, BigText...
+│       └── utility/      → TypeWriter, FadeIn...
+└── data-access/
+```
+
+## Usage
+
+```tsx
+import { Button, Container, Heading, Hero } from '@portfolio/ui';
 ```
 
 ## Commands
@@ -39,8 +54,8 @@ pnpm commit                        # conventional commit
 ## Generate
 
 ```bash
-pnpm nx g @nx/react:component button --project=ui
-pnpm nx g @nx/next:page about --project=web
+pnpm dlx shadcn@latest add button           # add shadcn component
+pnpm nx g @nx/next:page about --project=web # new page
 pnpm nx g @nx/nest:module users --project=api
 ```
 

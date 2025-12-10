@@ -6,6 +6,9 @@ const baseURL = process.env['BASE_URL'] || 'http://localhost:4200';
 
 export default defineConfig({
   ...nxE2EPreset(__filename, { testDir: './src' }),
+  fullyParallel: true,
+  workers: '50%',
+  timeout: 30000,
   use: {
     baseURL,
     trace: 'on-first-retry',

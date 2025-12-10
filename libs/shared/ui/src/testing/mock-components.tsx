@@ -6,6 +6,8 @@ import React from 'react';
  * These simplified versions don't rely on external dependencies like next-intl or Radix UI
  */
 
+// ==================== Base UI Components ====================
+
 // Button
 export const Button = ({ children, onClick, asChild, ...props }: any) => {
   if (asChild && React.isValidElement(children)) {
@@ -244,6 +246,202 @@ export const AvatarFallback = ({ children }: any) => (
 // Skeleton
 export const Skeleton = ({ className, ...props }: any) => (
   <div data-testid="skeleton" className={`animate-pulse ${className || ''}`} {...props} />
+);
+
+// ==================== Layout Components ====================
+
+export const Container = ({ children, ...props }: any) => (
+  <div data-testid="container" {...props}>{children}</div>
+);
+
+export const Section = ({ children, id, ...props }: any) => (
+  <section data-testid="section" id={id} {...props}>{children}</section>
+);
+
+export const PageLayout = ({ children, ...props }: any) => (
+  <div data-testid="page-layout" {...props}>{children}</div>
+);
+
+export const CenteredLayout = ({ children, topRight, footer, ...props }: any) => (
+  <div data-testid="centered-layout" {...props}>
+    {topRight && <div data-testid="top-right">{topRight}</div>}
+    {children}
+    {footer && <div data-testid="footer">{footer}</div>}
+  </div>
+);
+
+// ==================== Typography Components ====================
+
+export const Heading = ({ children, as: Tag = 'h2', ...props }: any) => (
+  <Tag data-testid="heading" {...props}>{children}</Tag>
+);
+
+export const Text = ({ children, as: Tag = 'p', ...props }: any) => (
+  <Tag data-testid="text" {...props}>{children}</Tag>
+);
+
+export const GradientText = ({ children, ...props }: any) => (
+  <span data-testid="gradient-text" {...props}>{children}</span>
+);
+
+// ==================== Navigation Components ====================
+
+export const Navbar = ({ children, logo, actions, ...props }: any) => (
+  <nav data-testid="navbar" {...props}>
+    {logo}
+    {children}
+    {actions}
+  </nav>
+);
+
+export const NavLink = ({ children, href, ...props }: any) => (
+  <a data-testid="nav-link" href={href} {...props}>{children}</a>
+);
+
+export const Footer = ({ children, left, right, ...props }: any) => (
+  <footer data-testid="footer" {...props}>
+    {left}
+    {children}
+    {right}
+  </footer>
+);
+
+export const Logo = ({ primary, secondary, ...props }: any) => (
+  <a data-testid="logo" {...props}>
+    <span>{primary || 'D'}</span>{secondary || 'M'}
+  </a>
+);
+
+export const Copyright = ({ name }: any) => (
+  <span data-testid="copyright">© {new Date().getFullYear()} {name}</span>
+);
+
+// ==================== Content Components ====================
+
+export const SectionHeader = ({ title, badge, description, children, ...props }: any) => (
+  <div data-testid="section-header" {...props}>
+    {badge && <span data-testid="badge">{badge}</span>}
+    <h2>{title}</h2>
+    {description && <p>{description}</p>}
+    {children}
+  </div>
+);
+
+export const Hero = ({ title, subtitle, description, badge, actions, children, ...props }: any) => (
+  <section data-testid="hero" {...props}>
+    {badge}
+    <h1>{title}</h1>
+    {subtitle}
+    {description && <p>{description}</p>}
+    {actions}
+    {children}
+  </section>
+);
+
+export const ProjectCard = ({ title, description, icon, tags, ...props }: any) => (
+  <div data-testid="project-card" {...props}>
+    {icon && <div>{icon}</div>}
+    <h3>{title}</h3>
+    <p>{description}</p>
+    {tags?.map((tag: string) => <span key={tag}>{tag}</span>)}
+  </div>
+);
+
+export const SkillBar = ({ name, level, ...props }: any) => (
+  <div data-testid="skill-bar" {...props}>
+    <span>{name}</span>
+    <div style={{ width: `${level}%` }} />
+  </div>
+);
+
+export const TechBadge = ({ children, ...props }: any) => (
+  <div data-testid="tech-badge" {...props}>{children}</div>
+);
+
+export const StatCard = ({ stats, icon, ...props }: any) => (
+  <div data-testid="stat-card" {...props}>
+    {icon}
+    {stats?.map((stat: any) => (
+      <div key={stat.label}>
+        <span>{stat.value}</span>
+        <span>{stat.label}</span>
+      </div>
+    ))}
+  </div>
+);
+
+// ==================== Status Components ====================
+
+export const StatusIcon = ({ children, variant, ...props }: any) => (
+  <div data-testid="status-icon" data-variant={variant} {...props}>{children}</div>
+);
+
+export const StatusIndicator = ({ label, variant, ...props }: any) => (
+  <div data-testid="status-indicator" data-variant={variant} {...props}>{label}</div>
+);
+
+export const BigText = ({ text, children, ...props }: any) => (
+  <div data-testid="big-text" {...props}>
+    <span>{text}</span>
+    {children}
+  </div>
+);
+
+export const ActionButtons = ({ children, ...props }: any) => (
+  <div data-testid="action-buttons" {...props}>{children}</div>
+);
+
+// ==================== Utility Components ====================
+
+export const TypeWriter = ({ words, ...props }: any) => (
+  <span data-testid="typewriter" {...props}>{words?.[0] || ''}</span>
+);
+
+export const SocialLinks = ({ links, ...props }: any) => (
+  <div data-testid="social-links" {...props}>
+    {links?.map((link: any) => (
+      <a key={link.name} href={link.href}>{link.name}</a>
+    ))}
+  </div>
+);
+
+export const Icon = ({ children, size, ...props }: any) => (
+  <svg data-testid="icon" data-size={size} {...props}>{children}</svg>
+);
+
+export const Icons = {
+  email: null,
+  arrowRight: null,
+  arrowDown: null,
+  warning: null,
+  settings: null,
+  wifi: null,
+  wifiOff: null,
+};
+
+export const GitHubIcon = ({ className }: any) => (
+  <svg data-testid="github-icon" className={className} />
+);
+
+export const LinkedInIcon = ({ className }: any) => (
+  <svg data-testid="linkedin-icon" className={className} />
+);
+
+export const EmailIcon = ({ className }: any) => (
+  <svg data-testid="email-icon" className={className} />
+);
+
+export const TipsList = ({ title, items, ...props }: any) => (
+  <div data-testid="tips-list" {...props}>
+    <h3>{title}</h3>
+    <ul>
+      {items?.map((item: string, i: number) => <li key={i}>{item}</li>)}
+    </ul>
+  </div>
+);
+
+export const FadeIn = ({ children, ...props }: any) => (
+  <div data-testid="fade-in" {...props}>{children}</div>
 );
 
 // Utility function

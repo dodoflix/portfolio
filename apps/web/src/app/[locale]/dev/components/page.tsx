@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import {
+  // UI Components
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -17,7 +18,6 @@ import {
   AlertDialogTrigger,
   Avatar,
   AvatarFallback,
-  AvatarImage,
   Badge,
   Button,
   Card,
@@ -42,6 +42,7 @@ import {
   DropdownMenuTrigger,
   Input,
   Label,
+  LanguageSwitcher,
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -66,6 +67,41 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
+  // Layout Components
+  Container,
+  Section,
+  PageLayout,
+  CenteredLayout,
+  // Typography Components
+  Heading,
+  Text,
+  GradientText,
+  // Navigation Components
+  Navbar,
+  NavLink,
+  Footer,
+  Logo,
+  Copyright,
+  // Content Components
+  SectionHeader,
+  Hero,
+  ProjectCard,
+  SkillBar,
+  TechBadge,
+  StatCard,
+  // Status Components
+  StatusIcon,
+  StatusIndicator,
+  BigText,
+  ActionButtons,
+  // Utility Components
+  TypeWriter,
+  SocialLinks,
+  TipsList,
+  FadeIn,
+  GitHubIcon,
+  LinkedInIcon,
+  EmailIcon,
 } from '@portfolio/ui';
 
 function ComponentSection({
@@ -77,7 +113,7 @@ function ComponentSection({
 }) {
   return (
     <section className="space-y-4">
-      <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
+      <Heading as="h2" size="lg">{title}</Heading>
       <div className="rounded-lg border bg-card p-6">{children}</div>
     </section>
   );
@@ -88,387 +124,513 @@ export default function ComponentsPage() {
   const [sliderValue, setSliderValue] = useState([50]);
   const [checked, setChecked] = useState(false);
   const [switchOn, setSwitchOn] = useState(false);
+  const mounted = true;
+
+  const socialLinks = [
+    { name: 'Email', href: 'mailto:test@example.com', icon: <EmailIcon /> },
+    { name: 'GitHub', href: 'https://github.com', icon: <GitHubIcon /> },
+    { name: 'LinkedIn', href: 'https://linkedin.com', icon: <LinkedInIcon /> },
+  ];
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-background">
+      <PageLayout>
         {/* Header */}
-        <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur">
-          <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-4">
-              <h1 className="text-xl font-bold">Component Library</h1>
-              <Badge variant="secondary">Development Only</Badge>
-            </div>
-            <ThemeToggle />
-          </div>
-        </header>
+        <Navbar
+          logo={<Logo href="/dev/components" />}
+          actions={
+            <>
+              <Badge variant="secondary">Dev Only</Badge>
+              <LanguageSwitcher />
+              <ThemeToggle />
+            </>
+          }
+        >
+          <NavLink href="#base">Base</NavLink>
+          <NavLink href="#layout">Layout</NavLink>
+          <NavLink href="#content">Content</NavLink>
+          <NavLink href="#status">Status</NavLink>
+          <NavLink href="#utility">Utility</NavLink>
+        </Navbar>
 
         {/* Main Content */}
-        <main className="mx-auto max-w-6xl px-4 py-8 space-y-12 sm:px-6 lg:px-8">
-          {/* Buttons */}
-          <ComponentSection title="Button">
-            <div className="flex flex-wrap gap-4">
-              <Button>Default</Button>
-              <Button variant="secondary">Secondary</Button>
-              <Button variant="destructive">Destructive</Button>
-              <Button variant="outline">Outline</Button>
-              <Button variant="ghost">Ghost</Button>
-              <Button variant="link">Link</Button>
+        <Container className="py-8 space-y-12">
+          <FadeIn>
+            <div className="space-y-2">
+              <Heading as="h1" size="2xl">Component Library</Heading>
+              <Text variant="muted">All available components in the UI library</Text>
             </div>
-            <Separator className="my-4" />
-            <div className="flex flex-wrap gap-4">
-              <Button size="sm">Small</Button>
-              <Button size="default">Default</Button>
-              <Button size="lg">Large</Button>
-              <Button size="icon">
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
-              </Button>
-            </div>
-            <Separator className="my-4" />
-            <div className="flex flex-wrap gap-4">
-              <Button disabled>Disabled</Button>
-            </div>
-          </ComponentSection>
+          </FadeIn>
 
-          {/* Badge */}
-          <ComponentSection title="Badge">
-            <div className="flex flex-wrap gap-4">
-              <Badge>Default</Badge>
-              <Badge variant="secondary">Secondary</Badge>
-              <Badge variant="destructive">Destructive</Badge>
-              <Badge variant="outline">Outline</Badge>
-            </div>
-          </ComponentSection>
+          {/* Base UI Components */}
+          <div id="base" className="space-y-8">
+            <Heading as="h2" size="xl">Base Components</Heading>
 
-          {/* Input & Textarea */}
-          <ComponentSection title="Input & Textarea">
-            <div className="grid gap-4 max-w-md">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="Enter your email" />
+            {/* Buttons */}
+            <ComponentSection title="Button">
+              <div className="flex flex-wrap gap-4">
+                <Button>Default</Button>
+                <Button variant="secondary">Secondary</Button>
+                <Button variant="destructive">Destructive</Button>
+                <Button variant="outline">Outline</Button>
+                <Button variant="ghost">Ghost</Button>
+                <Button variant="link">Link</Button>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" placeholder="Enter password" />
+              <Separator className="my-4" />
+              <div className="flex flex-wrap gap-4">
+                <Button size="sm">Small</Button>
+                <Button size="default">Default</Button>
+                <Button size="lg">Large</Button>
+                <Button size="icon">+</Button>
+                <Button disabled>Disabled</Button>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="disabled">Disabled</Label>
-                <Input id="disabled" disabled placeholder="Disabled input" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="message">Message</Label>
-                <Textarea id="message" placeholder="Type your message here..." />
-              </div>
-            </div>
-          </ComponentSection>
+            </ComponentSection>
 
-          {/* Checkbox & Switch */}
-          <ComponentSection title="Checkbox & Switch">
-            <div className="flex flex-col gap-6">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="terms"
-                  checked={checked}
-                  onCheckedChange={(c) => setChecked(c as boolean)}
-                />
-                <Label htmlFor="terms">Accept terms and conditions</Label>
+            {/* Badge */}
+            <ComponentSection title="Badge">
+              <div className="flex flex-wrap gap-4">
+                <Badge>Default</Badge>
+                <Badge variant="secondary">Secondary</Badge>
+                <Badge variant="destructive">Destructive</Badge>
+                <Badge variant="outline">Outline</Badge>
               </div>
-              <div className="flex items-center space-x-2">
-                <Switch
-                  id="airplane"
-                  checked={switchOn}
-                  onCheckedChange={setSwitchOn}
-                />
-                <Label htmlFor="airplane">Airplane Mode</Label>
-              </div>
-            </div>
-          </ComponentSection>
+            </ComponentSection>
 
-          {/* Select */}
-          <ComponentSection title="Select">
-            <div className="max-w-xs">
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a fruit" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="orange">Orange</SelectItem>
-                  <SelectItem value="grape">Grape</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </ComponentSection>
-
-          {/* Slider & Progress */}
-          <ComponentSection title="Slider & Progress">
-            <div className="space-y-8 max-w-md">
-              <div className="space-y-2">
-                <Label>Slider: {sliderValue[0]}%</Label>
-                <Slider
-                  value={sliderValue}
-                  onValueChange={setSliderValue}
-                  max={100}
-                  step={1}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Progress: {progress}%</Label>
-                <Progress value={progress} />
-                <div className="flex gap-2">
-                  <Button size="sm" onClick={() => setProgress(Math.max(0, progress - 10))}>
-                    -10
-                  </Button>
-                  <Button size="sm" onClick={() => setProgress(Math.min(100, progress + 10))}>
-                    +10
-                  </Button>
+            {/* Input & Textarea */}
+            <ComponentSection title="Input & Textarea">
+              <div className="grid gap-4 max-w-md">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input id="email" type="email" placeholder="Enter your email" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="disabled">Disabled</Label>
+                  <Input id="disabled" disabled placeholder="Disabled input" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="message">Message</Label>
+                  <Textarea id="message" placeholder="Type your message..." />
                 </div>
               </div>
-            </div>
-          </ComponentSection>
+            </ComponentSection>
 
-          {/* Card */}
-          <ComponentSection title="Card">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Card Title</CardTitle>
-                  <CardDescription>Card description goes here</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p>Card content with some text.</p>
-                </CardContent>
-                <CardFooter>
-                  <Button>Action</Button>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Another Card</CardTitle>
-                  <CardDescription>With different content</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center gap-4">
-                    <Avatar>
-                      <AvatarFallback>JD</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-medium">John Doe</p>
-                      <p className="text-sm text-muted-foreground">Developer</p>
+            {/* Checkbox & Switch */}
+            <ComponentSection title="Checkbox & Switch">
+              <div className="flex flex-col gap-6">
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="terms" checked={checked} onCheckedChange={(c) => setChecked(c as boolean)} />
+                  <Label htmlFor="terms">Accept terms</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Switch id="airplane" checked={switchOn} onCheckedChange={setSwitchOn} />
+                  <Label htmlFor="airplane">Airplane Mode</Label>
+                </div>
+              </div>
+            </ComponentSection>
+
+            {/* Select */}
+            <ComponentSection title="Select">
+              <div className="max-w-xs">
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1">Option 1</SelectItem>
+                    <SelectItem value="2">Option 2</SelectItem>
+                    <SelectItem value="3">Option 3</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </ComponentSection>
+
+            {/* Slider & Progress */}
+            <ComponentSection title="Slider & Progress">
+              <div className="space-y-8 max-w-md">
+                <div className="space-y-2">
+                  <Label>Slider: {sliderValue[0]}%</Label>
+                  <Slider value={sliderValue} onValueChange={setSliderValue} max={100} step={1} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Progress: {progress}%</Label>
+                  <Progress value={progress} />
+                  <div className="flex gap-2">
+                    <Button size="sm" onClick={() => setProgress(Math.max(0, progress - 10))}>-10</Button>
+                    <Button size="sm" onClick={() => setProgress(Math.min(100, progress + 10))}>+10</Button>
+                  </div>
+                </div>
+              </div>
+            </ComponentSection>
+
+            {/* Card */}
+            <ComponentSection title="Card">
+              <div className="grid gap-4 md:grid-cols-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Card Title</CardTitle>
+                    <CardDescription>Card description</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Text>Card content here.</Text>
+                  </CardContent>
+                  <CardFooter>
+                    <Button>Action</Button>
+                  </CardFooter>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>With Avatar</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center gap-4">
+                      <Avatar>
+                        <AvatarFallback>DM</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <Text className="font-medium">Doğukan Metan</Text>
+                        <Text size="sm" variant="muted">Developer</Text>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </ComponentSection>
+                  </CardContent>
+                </Card>
+              </div>
+            </ComponentSection>
 
-          {/* Avatar */}
-          <ComponentSection title="Avatar">
-            <div className="flex gap-4">
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <Avatar>
-                <AvatarFallback>JD</AvatarFallback>
-              </Avatar>
-              <Avatar>
-                <AvatarFallback>AB</AvatarFallback>
-              </Avatar>
-            </div>
-          </ComponentSection>
+            {/* Tabs */}
+            <ComponentSection title="Tabs">
+              <Tabs defaultValue="tab1" className="max-w-md">
+                <TabsList>
+                  <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+                  <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+                  <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+                </TabsList>
+                <TabsContent value="tab1" className="mt-4">
+                  <Text>Content for tab 1</Text>
+                </TabsContent>
+                <TabsContent value="tab2" className="mt-4">
+                  <Text>Content for tab 2</Text>
+                </TabsContent>
+                <TabsContent value="tab3" className="mt-4">
+                  <Text>Content for tab 3</Text>
+                </TabsContent>
+              </Tabs>
+            </ComponentSection>
 
-          {/* Tabs */}
-          <ComponentSection title="Tabs">
-            <Tabs defaultValue="account" className="max-w-md">
-              <TabsList>
-                <TabsTrigger value="account">Account</TabsTrigger>
-                <TabsTrigger value="password">Password</TabsTrigger>
-                <TabsTrigger value="settings">Settings</TabsTrigger>
-              </TabsList>
-              <TabsContent value="account" className="mt-4">
-                <p>Account settings content here.</p>
-              </TabsContent>
-              <TabsContent value="password" className="mt-4">
-                <p>Password settings content here.</p>
-              </TabsContent>
-              <TabsContent value="settings" className="mt-4">
-                <p>General settings content here.</p>
-              </TabsContent>
-            </Tabs>
-          </ComponentSection>
+            {/* Accordion */}
+            <ComponentSection title="Accordion">
+              <Accordion type="single" collapsible className="max-w-md">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>Is it accessible?</AccordionTrigger>
+                  <AccordionContent>Yes. WAI-ARIA compliant.</AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                  <AccordionTrigger>Is it styled?</AccordionTrigger>
+                  <AccordionContent>Yes. Themed by default.</AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </ComponentSection>
 
-          {/* Accordion */}
-          <ComponentSection title="Accordion">
-            <Accordion type="single" collapsible className="max-w-md">
-              <AccordionItem value="item-1">
-                <AccordionTrigger>Is it accessible?</AccordionTrigger>
-                <AccordionContent>
-                  Yes. It adheres to the WAI-ARIA design pattern.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-2">
-                <AccordionTrigger>Is it styled?</AccordionTrigger>
-                <AccordionContent>
-                  Yes. It comes with default styles that match your theme.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-3">
-                <AccordionTrigger>Is it animated?</AccordionTrigger>
-                <AccordionContent>
-                  Yes. It's animated by default with smooth transitions.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </ComponentSection>
+            {/* Dialog & AlertDialog */}
+            <ComponentSection title="Dialog & AlertDialog">
+              <div className="flex gap-4">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button>Open Dialog</Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Dialog Title</DialogTitle>
+                      <DialogDescription>Dialog description here.</DialogDescription>
+                    </DialogHeader>
+                    <Input placeholder="Input..." />
+                    <DialogFooter>
+                      <Button variant="outline">Cancel</Button>
+                      <Button>Save</Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
 
-          {/* Dialog */}
-          <ComponentSection title="Dialog">
-            <div className="flex gap-4">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button>Open Dialog</Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Dialog Title</DialogTitle>
-                    <DialogDescription>
-                      This is a dialog description. Make changes here.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="py-4">
-                    <Input placeholder="Enter something..." />
-                  </div>
-                  <DialogFooter>
-                    <Button variant="outline">Cancel</Button>
-                    <Button>Save</Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive">Delete</Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                      <AlertDialogDescription>This cannot be undone.</AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction>Delete</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
+            </ComponentSection>
 
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="destructive">Delete Item</Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      your item.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction>Delete</AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </div>
-          </ComponentSection>
+            {/* Dropdown, Popover, Tooltip */}
+            <ComponentSection title="Dropdown, Popover & Tooltip">
+              <div className="flex gap-4">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline">Dropdown</Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>Settings</DropdownMenuItem>
+                    <DropdownMenuItem className="text-destructive">Logout</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
-          {/* Dropdown Menu */}
-          <ComponentSection title="Dropdown Menu">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline">Open Menu</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Billing</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive">
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </ComponentSection>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline">Popover</Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <Text className="font-medium">Popover content</Text>
+                  </PopoverContent>
+                </Popover>
 
-          {/* Popover & Tooltip */}
-          <ComponentSection title="Popover & Tooltip">
-            <div className="flex gap-4">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline">Open Popover</Button>
-                </PopoverTrigger>
-                <PopoverContent>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="outline">Tooltip</Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Tooltip text</TooltipContent>
+                </Tooltip>
+              </div>
+            </ComponentSection>
+
+            {/* Skeleton & ScrollArea */}
+            <ComponentSection title="Skeleton & ScrollArea">
+              <div className="flex gap-8">
+                <div className="flex items-center space-x-4">
+                  <Skeleton className="h-12 w-12 rounded-full" />
                   <div className="space-y-2">
-                    <h4 className="font-medium">Popover Title</h4>
-                    <p className="text-sm text-muted-foreground">
-                      This is a popover with some content.
-                    </p>
+                    <Skeleton className="h-4 w-[200px]" />
+                    <Skeleton className="h-4 w-[150px]" />
                   </div>
-                </PopoverContent>
-              </Popover>
-
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="outline">Hover for Tooltip</Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>This is a tooltip</p>
-                </TooltipContent>
-              </Tooltip>
-            </div>
-          </ComponentSection>
-
-          {/* Skeleton */}
-          <ComponentSection title="Skeleton">
-            <div className="flex items-center space-x-4">
-              <Skeleton className="h-12 w-12 rounded-full" />
-              <div className="space-y-2">
-                <Skeleton className="h-4 w-[250px]" />
-                <Skeleton className="h-4 w-[200px]" />
+                </div>
+                <ScrollArea className="h-[150px] w-[200px] rounded-md border p-4">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <Text key={i} size="sm" className="py-1">Scroll item {i + 1}</Text>
+                  ))}
+                </ScrollArea>
               </div>
-            </div>
-          </ComponentSection>
+            </ComponentSection>
+          </div>
 
-          {/* Scroll Area */}
-          <ComponentSection title="Scroll Area">
-            <ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
+          {/* Layout Components */}
+          <div id="layout" className="space-y-8">
+            <Heading as="h2" size="xl">Layout Components</Heading>
+
+            <ComponentSection title="Typography">
               <div className="space-y-4">
-                {Array.from({ length: 20 }).map((_, i) => (
-                  <div key={i} className="text-sm">
-                    Item {i + 1} - Scrollable content here
-                  </div>
-                ))}
+                <Heading as="h1" size="2xl">Heading 2XL</Heading>
+                <Heading as="h2" size="xl">Heading XL</Heading>
+                <Heading as="h3" size="lg">Heading LG</Heading>
+                <GradientText>Gradient Text</GradientText>
+                <Text>Default text</Text>
+                <Text variant="muted">Muted text</Text>
+                <Text size="sm">Small text</Text>
               </div>
-            </ScrollArea>
-          </ComponentSection>
+            </ComponentSection>
 
-          {/* Separator */}
-          <ComponentSection title="Separator">
-            <div className="space-y-4">
-              <div>
-                <h4 className="text-sm font-medium">Horizontal</h4>
-                <Separator className="my-2" />
-                <p className="text-sm text-muted-foreground">Content below separator</p>
+            <ComponentSection title="Section">
+              <Text size="sm" variant="muted" className="mb-4">
+                Section component with variants (default, muted)
+              </Text>
+              <Section className="border rounded-lg">
+                <Text>Default section content</Text>
+              </Section>
+              <Section variant="muted" className="mt-4 rounded-lg">
+                <Text>Muted section content</Text>
+              </Section>
+            </ComponentSection>
+
+            <ComponentSection title="CenteredLayout">
+              <Text size="sm" variant="muted" className="mb-4">
+                Used for status pages (404, error, offline, maintenance)
+              </Text>
+              <div className="border rounded-lg h-[200px] overflow-hidden">
+                <CenteredLayout
+                  topRight={<Badge>Actions</Badge>}
+                  footer={<Text size="sm">Footer</Text>}
+                >
+                  <Text>Centered content</Text>
+                </CenteredLayout>
               </div>
-              <div className="flex h-5 items-center space-x-4 text-sm">
-                <span>Item 1</span>
-                <Separator orientation="vertical" />
-                <span>Item 2</span>
-                <Separator orientation="vertical" />
-                <span>Item 3</span>
+            </ComponentSection>
+          </div>
+
+          {/* Content Components */}
+          <div id="content" className="space-y-8">
+            <Heading as="h2" size="xl">Content Components</Heading>
+
+            <ComponentSection title="Hero">
+              <Hero
+                badge={<Badge>Available</Badge>}
+                title={<GradientText>Hero Title</GradientText>}
+                subtitle="Subtitle text here"
+                description="Hero description for landing pages"
+                actions={
+                  <>
+                    <Button>Primary</Button>
+                    <Button variant="outline">Secondary</Button>
+                  </>
+                }
+              />
+            </ComponentSection>
+
+            <ComponentSection title="SectionHeader">
+              <SectionHeader
+                badge="Badge"
+                title="Section Title"
+                description="Section description goes here"
+              />
+            </ComponentSection>
+
+            <ComponentSection title="ProjectCard">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <ProjectCard
+                  title="Project Title"
+                  description="Project description here"
+                  icon="🚀"
+                  tags={['React', 'TypeScript']}
+                />
+                <ProjectCard
+                  title="Another Project"
+                  description="Another description"
+                  icon="📦"
+                  tags={['Node.js', 'AWS']}
+                />
               </div>
-            </div>
-          </ComponentSection>
-        </main>
+            </ComponentSection>
+
+            <ComponentSection title="SkillBar">
+              <div className="max-w-md space-y-4">
+                <SkillBar name="TypeScript" level={90} animate={mounted} />
+                <SkillBar name="React" level={85} animate={mounted} />
+                <SkillBar name="Node.js" level={80} animate={mounted} />
+              </div>
+            </ComponentSection>
+
+            <ComponentSection title="TechBadge">
+              <div className="flex flex-wrap gap-2">
+                <TechBadge>TypeScript</TechBadge>
+                <TechBadge>React</TechBadge>
+                <TechBadge>Node.js</TechBadge>
+                <TechBadge>Docker</TechBadge>
+                <TechBadge>Kubernetes</TechBadge>
+              </div>
+            </ComponentSection>
+
+            <ComponentSection title="StatCard">
+              <StatCard
+                variant="gradient"
+                icon="👨‍💻"
+                stats={[
+                  { value: '5+', label: 'Years' },
+                  { value: '50+', label: 'Projects' },
+                ]}
+              />
+            </ComponentSection>
+
+            <ComponentSection title="SocialLinks">
+              <SocialLinks links={socialLinks} />
+            </ComponentSection>
+          </div>
+
+          {/* Status Components */}
+          <div id="status" className="space-y-8">
+            <Heading as="h2" size="xl">Status Components</Heading>
+
+            <ComponentSection title="StatusIcon">
+              <div className="flex gap-8">
+                <div className="text-center">
+                  <StatusIcon variant="error">⚠️</StatusIcon>
+                  <Text size="sm" className="mt-2">Error</Text>
+                </div>
+                <div className="text-center">
+                  <StatusIcon variant="warning">🔧</StatusIcon>
+                  <Text size="sm" className="mt-2">Warning</Text>
+                </div>
+                <div className="text-center">
+                  <StatusIcon variant="success">✓</StatusIcon>
+                  <Text size="sm" className="mt-2">Success</Text>
+                </div>
+              </div>
+            </ComponentSection>
+
+            <ComponentSection title="StatusIndicator">
+              <StatusIndicator label="In Progress" />
+            </ComponentSection>
+
+            <ComponentSection title="BigText">
+              <BigText text="404" />
+            </ComponentSection>
+
+            <ComponentSection title="ActionButtons">
+              <ActionButtons>
+                <Button>Primary</Button>
+                <Button variant="outline">Secondary</Button>
+              </ActionButtons>
+            </ComponentSection>
+
+            <ComponentSection title="TipsList">
+              <TipsList
+                title="Tips:"
+                items={['Tip one', 'Tip two', 'Tip three']}
+              />
+            </ComponentSection>
+          </div>
+
+          {/* Utility Components */}
+          <div id="utility" className="space-y-8">
+            <Heading as="h2" size="xl">Utility Components</Heading>
+
+            <ComponentSection title="TypeWriter">
+              <div className="h-8">
+                <TypeWriter words={['Developer', 'Designer', 'Creator']} />
+              </div>
+            </ComponentSection>
+
+            <ComponentSection title="FadeIn">
+              <FadeIn delay={0}>
+                <Card>
+                  <CardContent className="pt-6">
+                    <Text>This content fades in on mount</Text>
+                  </CardContent>
+                </Card>
+              </FadeIn>
+            </ComponentSection>
+
+            <ComponentSection title="Icons">
+              <div className="flex gap-4">
+                <div className="flex items-center gap-2">
+                  <GitHubIcon className="h-5 w-5" />
+                  <Text size="sm">GitHubIcon</Text>
+                </div>
+                <div className="flex items-center gap-2">
+                  <LinkedInIcon className="h-5 w-5" />
+                  <Text size="sm">LinkedInIcon</Text>
+                </div>
+                <div className="flex items-center gap-2">
+                  <EmailIcon className="h-5 w-5" />
+                  <Text size="sm">EmailIcon</Text>
+                </div>
+              </div>
+            </ComponentSection>
+          </div>
+        </Container>
 
         {/* Footer */}
-        <footer className="border-t py-6">
-          <div className="mx-auto max-w-6xl px-4 text-center text-sm text-muted-foreground sm:px-6 lg:px-8">
-            Component Library - Development Only
-          </div>
-        </footer>
-      </div>
+        <Footer
+          left={<Copyright name="Portfolio" />}
+          right={<Text size="sm" variant="muted">Dev Only</Text>}
+        />
+      </PageLayout>
     </TooltipProvider>
   );
 }
-

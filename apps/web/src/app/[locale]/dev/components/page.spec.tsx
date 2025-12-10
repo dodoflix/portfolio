@@ -12,100 +12,146 @@ describe('ComponentsPage', () => {
     expect(screen.getByText('Component Library')).toBeInTheDocument();
   });
 
-  it('should display development only badge', () => {
+  it('should display dev only badge', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Development Only')).toBeInTheDocument();
+    expect(screen.getAllByText('Dev Only').length).toBeGreaterThan(0);
   });
 
-  it('should have button section', () => {
+  // Navigation links
+  it('should have navigation links', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Button')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Base' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Layout' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Content' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Status' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Utility' })).toBeInTheDocument();
   });
 
-  it('should have badge section', () => {
+  // Section headers
+  it('should have Base Components section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Badge')).toBeInTheDocument();
+    expect(screen.getByText('Base Components')).toBeInTheDocument();
   });
 
-  it('should have input section', () => {
+  it('should have Layout Components section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Input & Textarea')).toBeInTheDocument();
+    expect(screen.getByText('Layout Components')).toBeInTheDocument();
   });
 
-  it('should have checkbox section', () => {
+  it('should have Content Components section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Checkbox & Switch')).toBeInTheDocument();
+    expect(screen.getByText('Content Components')).toBeInTheDocument();
   });
 
-  it('should have select section', () => {
+  it('should have Status Components section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Select')).toBeInTheDocument();
+    expect(screen.getByText('Status Components')).toBeInTheDocument();
   });
 
-  it('should have slider section', () => {
+  it('should have Utility Components section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Slider & Progress')).toBeInTheDocument();
+    expect(screen.getByText('Utility Components')).toBeInTheDocument();
   });
 
-  it('should have card section', () => {
+  // Base component sections
+  it('should have Button section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Card')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Button' })).toBeInTheDocument();
   });
 
-  it('should have avatar section', () => {
+  it('should have Badge section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Avatar')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Badge' })).toBeInTheDocument();
   });
 
-  it('should have tabs section', () => {
+  it('should have Input & Textarea section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Tabs')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Input & Textarea' })).toBeInTheDocument();
   });
 
-  it('should have accordion section', () => {
+  it('should have Card section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Accordion')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Card' })).toBeInTheDocument();
   });
 
-  it('should have dialog section', () => {
+  it('should have Tabs section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Dialog')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Tabs' })).toBeInTheDocument();
   });
 
-  it('should have dropdown menu section', () => {
+  it('should have Accordion section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Dropdown Menu')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Accordion' })).toBeInTheDocument();
   });
 
-  it('should have popover section', () => {
+  // Layout component sections
+  it('should have Typography section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Popover & Tooltip')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Typography' })).toBeInTheDocument();
   });
 
-  it('should have skeleton section', () => {
+  it('should have Section component section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Skeleton')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Section' })).toBeInTheDocument();
   });
 
-  it('should have scroll area section', () => {
+  it('should have CenteredLayout section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Scroll Area')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'CenteredLayout' })).toBeInTheDocument();
   });
 
-  it('should have separator section', () => {
+  // Content component sections
+  it('should have Hero section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Separator')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Hero' })).toBeInTheDocument();
   });
 
+  it('should have ProjectCard section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'ProjectCard' })).toBeInTheDocument();
+  });
+
+  it('should have SkillBar section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'SkillBar' })).toBeInTheDocument();
+  });
+
+  it('should have StatCard section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'StatCard' })).toBeInTheDocument();
+  });
+
+  // Status component sections
+  it('should have StatusIcon section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'StatusIcon' })).toBeInTheDocument();
+  });
+
+  it('should have BigText section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'BigText' })).toBeInTheDocument();
+  });
+
+  // Utility component sections
+  it('should have TypeWriter section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'TypeWriter' })).toBeInTheDocument();
+  });
+
+  it('should have FadeIn section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'FadeIn' })).toBeInTheDocument();
+  });
+
+  it('should have Icons section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'Icons' })).toBeInTheDocument();
+  });
+
+  // Footer
   it('should have footer', () => {
     const { container } = render(<ComponentsPage />);
     const footer = container.querySelector('footer');
     expect(footer).toBeInTheDocument();
-  });
-
-  it('should have header', () => {
-    const { container } = render(<ComponentsPage />);
-    const header = container.querySelector('header');
-    expect(header).toBeInTheDocument();
   });
 });

@@ -1,14 +1,11 @@
 import {
   ThemeToggle,
-  CenteredLayout,
-  StatusIcon,
-  StatusIndicator,
-  Heading,
-  Text,
-  Copyright,
-  Icon,
-  Icons,
+  Badge,
+  HStack,
+  // Compositions
+  StatusPage,
 } from '@portfolio/ui';
+import { Settings } from 'lucide-react';
 
 export const metadata = {
   title: 'Maintenance - Portfolio',
@@ -17,29 +14,28 @@ export const metadata = {
 
 export default function MaintenancePage() {
   return (
-    <CenteredLayout
-      topRight={<ThemeToggle />}
-      footer={<Copyright name="Portfolio" />}
-    >
-      <StatusIcon variant="info" size="md" pulse>
-        <Icon size="xl">{Icons.settings}</Icon>
-      </StatusIcon>
-
-      <div className="space-y-4">
-        <Heading as="h1" size="xl">
-          Under Maintenance
-        </Heading>
-        <Text size="lg" variant="muted" className="max-w-md">
-          We're currently performing scheduled maintenance to improve your
-          experience. We'll be back shortly.
-        </Text>
+    <div className="relative">
+      {/* Top right actions */}
+      <div className="absolute top-4 right-4 z-50">
+        <ThemeToggle />
       </div>
 
-      <StatusIndicator variant="away" label="Maintenance in progress" />
+      <StatusPage
+        icon={<Settings className="h-16 w-16 text-primary animate-spin-slow" />}
+        title="Under Maintenance"
+        description="We're currently performing scheduled maintenance to improve your experience. We'll be back shortly."
+      >
+        <HStack gap={2} justify="center" className="mt-4">
+          <Badge variant="secondary" className="animate-pulse">
+            <span className="mr-2 inline-block h-2 w-2 rounded-full bg-yellow-500" />
+            Maintenance in progress
+          </Badge>
+        </HStack>
 
-      <Text size="sm" variant="muted">
-        Estimated completion: Soon™
-      </Text>
-    </CenteredLayout>
+        <p className="mt-4 text-sm text-muted-foreground">
+          Estimated completion: Soon™
+        </p>
+      </StatusPage>
+    </div>
   );
 }

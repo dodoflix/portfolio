@@ -20,40 +20,41 @@ describe('ComponentsPage', () => {
   // Navigation links
   it('should have navigation links', () => {
     render(<ComponentsPage />);
-    expect(screen.getByRole('link', { name: 'Base' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Layout' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Content' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Status' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Utility' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Core' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Primitives' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Atoms' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Decorative' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Compositions' })).toBeInTheDocument();
   });
 
   // Section headers
-  it('should have Base Components section', () => {
+  it('should have Core UI Components section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Base Components')).toBeInTheDocument();
+    expect(screen.getByText('Core UI Components')).toBeInTheDocument();
   });
 
-  it('should have Layout Components section', () => {
+  it('should have Layout Primitives section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Layout Components')).toBeInTheDocument();
+    expect(screen.getByText('Layout Primitives')).toBeInTheDocument();
   });
 
-  it('should have Content Components section', () => {
+  it('should have Atomic Components section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Content Components')).toBeInTheDocument();
+    expect(screen.getByText('Atomic Components')).toBeInTheDocument();
   });
 
-  it('should have Status Components section', () => {
+  it('should have Decorative Components section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Status Components')).toBeInTheDocument();
+    expect(screen.getByText('Decorative Components')).toBeInTheDocument();
   });
 
-  it('should have Utility Components section', () => {
+  it('should have Compositions section', () => {
     render(<ComponentsPage />);
-    expect(screen.getByText('Utility Components')).toBeInTheDocument();
+    // There are multiple "Compositions" texts - one in nav, one in section
+    expect(screen.getAllByText('Compositions').length).toBeGreaterThan(0);
   });
 
-  // Base component sections
+  // Core UI component sections
   it('should have Button section', () => {
     render(<ComponentsPage />);
     expect(screen.getByRole('heading', { name: 'Button' })).toBeInTheDocument();
@@ -84,55 +85,33 @@ describe('ComponentsPage', () => {
     expect(screen.getByRole('heading', { name: 'Accordion' })).toBeInTheDocument();
   });
 
-  // Layout component sections
+  // Primitive sections
+  it('should have VStack & HStack section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'VStack & HStack' })).toBeInTheDocument();
+  });
+
+  it('should have Cluster section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'Cluster (Auto-wrap)' })).toBeInTheDocument();
+  });
+
+  it('should have FullCenter section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'FullCenter' })).toBeInTheDocument();
+  });
+
+  it('should have Spacer section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'Spacer' })).toBeInTheDocument();
+  });
+
+  // Atomic component sections
   it('should have Typography section', () => {
     render(<ComponentsPage />);
     expect(screen.getByRole('heading', { name: 'Typography' })).toBeInTheDocument();
   });
 
-  it('should have Section component section', () => {
-    render(<ComponentsPage />);
-    expect(screen.getByRole('heading', { name: 'Section' })).toBeInTheDocument();
-  });
-
-  it('should have CenteredLayout section', () => {
-    render(<ComponentsPage />);
-    expect(screen.getByRole('heading', { name: 'CenteredLayout' })).toBeInTheDocument();
-  });
-
-  // Content component sections
-  it('should have Hero section', () => {
-    render(<ComponentsPage />);
-    expect(screen.getByRole('heading', { name: 'Hero' })).toBeInTheDocument();
-  });
-
-  it('should have ProjectCard section', () => {
-    render(<ComponentsPage />);
-    expect(screen.getByRole('heading', { name: 'ProjectCard' })).toBeInTheDocument();
-  });
-
-  it('should have SkillBar section', () => {
-    render(<ComponentsPage />);
-    expect(screen.getByRole('heading', { name: 'SkillBar' })).toBeInTheDocument();
-  });
-
-  it('should have StatCard section', () => {
-    render(<ComponentsPage />);
-    expect(screen.getByRole('heading', { name: 'StatCard' })).toBeInTheDocument();
-  });
-
-  // Status component sections
-  it('should have StatusIcon section', () => {
-    render(<ComponentsPage />);
-    expect(screen.getByRole('heading', { name: 'StatusIcon' })).toBeInTheDocument();
-  });
-
-  it('should have BigText section', () => {
-    render(<ComponentsPage />);
-    expect(screen.getByRole('heading', { name: 'BigText' })).toBeInTheDocument();
-  });
-
-  // Utility component sections
   it('should have TypeWriter section', () => {
     render(<ComponentsPage />);
     expect(screen.getByRole('heading', { name: 'TypeWriter' })).toBeInTheDocument();
@@ -143,9 +122,71 @@ describe('ComponentsPage', () => {
     expect(screen.getByRole('heading', { name: 'FadeIn' })).toBeInTheDocument();
   });
 
+  it('should have LabeledProgress section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'LabeledProgress' })).toBeInTheDocument();
+  });
+
+  it('should have StatValue section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'StatValue' })).toBeInTheDocument();
+  });
+
+  it('should have IconBox section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'IconBox' })).toBeInTheDocument();
+  });
+
+  it('should have LinkButton section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'LinkButton' })).toBeInTheDocument();
+  });
+
   it('should have Icons section', () => {
     render(<ComponentsPage />);
     expect(screen.getByRole('heading', { name: 'Icons' })).toBeInTheDocument();
+  });
+
+  // Decorative component sections
+  it('should have DecorativeText section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'DecorativeText' })).toBeInTheDocument();
+  });
+
+  it('should have GradientBlob section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'GradientBlob' })).toBeInTheDocument();
+  });
+
+  it('should have AnimatedLine section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'AnimatedLine' })).toBeInTheDocument();
+  });
+
+  it('should have ScrollIndicator section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'ScrollIndicator' })).toBeInTheDocument();
+  });
+
+  // Composition sections
+  it('should have HeroSection section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'HeroSection' })).toBeInTheDocument();
+  });
+
+  it('should have FeatureCard section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'FeatureCard' })).toBeInTheDocument();
+  });
+
+  it('should have StatsGrid section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'StatsGrid' })).toBeInTheDocument();
+  });
+
+  it('should have StatusPage section', () => {
+    render(<ComponentsPage />);
+    expect(screen.getByRole('heading', { name: 'StatusPage' })).toBeInTheDocument();
   });
 
   // Footer

@@ -6,15 +6,11 @@ import {
   Button,
   LanguageSwitcher,
   ThemeToggle,
-  CenteredLayout,
-  StatusIcon,
-  Heading,
-  Text,
-  ActionButtons,
-  Copyright,
-  Icon,
-  Icons,
+  HStack,
+  // Compositions
+  StatusPage,
 } from '@portfolio/ui';
+import { AlertTriangle } from 'lucide-react';
 
 export default function Error({
   error,
@@ -30,34 +26,29 @@ export default function Error({
   }, [error]);
 
   return (
-    <CenteredLayout
-      topRight={
-        <>
+    <div className="relative">
+      {/* Top right actions */}
+      <div className="absolute top-4 right-4 z-50">
+        <HStack gap={2}>
           <LanguageSwitcher />
           <ThemeToggle />
-        </>
-      }
-      footer={<Copyright name="Portfolio" />}
-    >
-      <StatusIcon variant="error" size="md">
-        <Icon size="xl">{Icons.warning}</Icon>
-      </StatusIcon>
-
-      <div className="space-y-4">
-        <Heading as="h1" size="xl">
-          {t('title')}
-        </Heading>
-        <Text size="lg" variant="muted" className="max-w-md">
-          {t('description')}
-        </Text>
+        </HStack>
       </div>
 
-      <ActionButtons>
-        <Button onClick={reset}>{t('tryAgain')}</Button>
-        <Button variant="outline" onClick={() => window.history.back()}>
-          Go back
-        </Button>
-      </ActionButtons>
-    </CenteredLayout>
+      <StatusPage
+        code="500"
+        icon={<AlertTriangle className="h-16 w-16 text-destructive" />}
+        title={t('title')}
+        description={t('description')}
+        actions={
+          <>
+            <Button onClick={reset}>{t('tryAgain')}</Button>
+            <Button variant="outline" onClick={() => window.history.back()}>
+              Go back
+            </Button>
+          </>
+        }
+      />
+    </div>
   );
 }

@@ -4,53 +4,58 @@ import Link from 'next/link';
 import {
   Button,
   ThemeToggle,
-  CenteredLayout,
-  StatusIcon,
-  Heading,
-  Text,
-  ActionButtons,
-  TipsList,
-  Copyright,
-  Icon,
-  Icons,
+  Card,
+  CardContent,
+  VStack,
+  // Compositions
+  StatusPage,
 } from '@portfolio/ui';
+import { WifiOff, CheckCircle2 } from 'lucide-react';
+
+const tips = [
+  'Check your Wi-Fi or mobile data connection',
+  'Try restarting your router',
+  'Move closer to your Wi-Fi router',
+  'Disable airplane mode if enabled',
+];
 
 export default function OfflinePage() {
   return (
-    <CenteredLayout
-      topRight={<ThemeToggle />}
-      footer={<Copyright name="Portfolio" />}
-    >
-      <StatusIcon variant="default" size="md">
-        <Icon size="xl">{Icons.wifiOff}</Icon>
-      </StatusIcon>
-
-      <div className="space-y-4">
-        <Heading as="h1" size="xl">
-          You're Offline
-        </Heading>
-        <Text size="lg" variant="muted" className="max-w-md">
-          It looks like you've lost your internet connection. Please check your
-          network and try again.
-        </Text>
+    <div className="relative">
+      {/* Top right actions */}
+      <div className="absolute top-4 right-4 z-50">
+        <ThemeToggle />
       </div>
 
-      <ActionButtons>
-        <Button onClick={() => window.location.reload()}>Try again</Button>
-        <Button variant="outline" asChild>
-          <Link href="/">Go home</Link>
-        </Button>
-      </ActionButtons>
-
-      <TipsList
-        title="Things to try:"
-        items={[
-          'Check your Wi-Fi or mobile data connection',
-          'Try restarting your router',
-          'Move closer to your Wi-Fi router',
-          'Disable airplane mode if enabled',
-        ]}
-      />
-    </CenteredLayout>
+      <StatusPage
+        icon={<WifiOff className="h-16 w-16 text-muted-foreground" />}
+        title="You're Offline"
+        description="It looks like you've lost your internet connection. Please check your network and try again."
+        actions={
+          <>
+            <Button onClick={() => window.location.reload()}>Try again</Button>
+            <Button variant="outline" asChild>
+              <Link href="/">Go home</Link>
+            </Button>
+          </>
+        }
+      >
+        <Card className="mt-8 max-w-md text-left">
+          <CardContent className="pt-6">
+            <VStack gap={4} align="start">
+              <p className="text-sm font-medium">Things to try:</p>
+              <ul className="space-y-2">
+                {tips.map((tip, index) => (
+                  <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </VStack>
+          </CardContent>
+        </Card>
+      </StatusPage>
+    </div>
   );
 }

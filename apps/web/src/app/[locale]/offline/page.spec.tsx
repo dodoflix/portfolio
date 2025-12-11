@@ -65,15 +65,4 @@ describe('OfflinePage', () => {
     const buttons = screen.getAllByRole('button');
     expect(buttons.length).toBeGreaterThan(0);
   });
-
-  it('should display copyright footer', () => {
-    render(<OfflinePage />);
-    expect(screen.getByText(/© \d{4} Portfolio/)).toBeInTheDocument();
-  });
-
-  it('should be centered on the screen', () => {
-    const { container } = render(<OfflinePage />);
-    const mainDiv = container.firstChild as HTMLElement;
-    expect(mainDiv).toHaveClass('flex', 'min-h-screen', 'items-center', 'justify-center');
-  });
 });

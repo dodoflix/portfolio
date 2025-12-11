@@ -58,8 +58,9 @@ describe('NotFound', () => {
     }
   });
 
-  it('should display copyright footer', () => {
+  it('should have theme toggle', () => {
     render(<NotFound />);
-    expect(screen.getByText(/© \d{4} Portfolio/)).toBeInTheDocument();
+    const buttons = screen.getAllByRole('button');
+    expect(buttons.length).toBeGreaterThanOrEqual(2); // ThemeToggle + Go back
   });
 });

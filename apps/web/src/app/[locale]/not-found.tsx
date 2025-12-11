@@ -5,40 +5,35 @@ import { useTranslations } from 'next-intl';
 import {
   Button,
   ThemeToggle,
-  CenteredLayout,
-  BigText,
-  Heading,
-  Text,
-  ActionButtons,
-  Copyright,
+  // Compositions
+  StatusPage,
 } from '@portfolio/ui';
 
 export default function NotFound() {
   const t = useTranslations('notFound');
 
   return (
-    <CenteredLayout
-      topRight={<ThemeToggle />}
-      footer={<Copyright name="Portfolio" />}
-    >
-      <BigText text="404">
-        <Heading as="h1" size="xl">
-          {t('title')}
-        </Heading>
-      </BigText>
+    <div className="relative">
+      {/* Top right actions */}
+      <div className="absolute top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
 
-      <Text size="lg" variant="muted" className="max-w-md">
-        {t('description')}
-      </Text>
-
-      <ActionButtons>
-        <Button asChild>
-          <Link href="/">{t('backHome')}</Link>
-        </Button>
-        <Button variant="outline" onClick={() => window.history.back()}>
-          Go back
-        </Button>
-      </ActionButtons>
-    </CenteredLayout>
+      <StatusPage
+        code="404"
+        title={t('title')}
+        description={t('description')}
+        actions={
+          <>
+            <Button asChild>
+              <Link href="/">{t('backHome')}</Link>
+            </Button>
+            <Button variant="outline" onClick={() => window.history.back()}>
+              Go back
+            </Button>
+          </>
+        }
+      />
+    </div>
   );
 }

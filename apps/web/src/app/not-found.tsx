@@ -4,39 +4,33 @@ import Link from 'next/link';
 import {
   Button,
   ThemeToggle,
-  CenteredLayout,
-  BigText,
-  Heading,
-  Text,
-  ActionButtons,
-  Copyright,
+  // Compositions
+  StatusPage,
 } from '@portfolio/ui';
 
 export default function RootNotFound() {
   return (
-    <CenteredLayout
-      topRight={<ThemeToggle />}
-      footer={<Copyright name="Portfolio" />}
-    >
-      <BigText text="404">
-        <Heading as="h1" size="xl">
-          Page not found
-        </Heading>
-      </BigText>
+    <div className="relative">
+      {/* Top right actions */}
+      <div className="absolute top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
 
-      <Text size="lg" variant="muted" className="max-w-md">
-        The page you&apos;re looking for doesn&apos;t exist or has been moved.
-      </Text>
-
-      <ActionButtons>
-        <Button asChild>
-          <Link href="/">Back to home</Link>
-        </Button>
-        <Button variant="outline" onClick={() => window.history.back()}>
-          Go back
-        </Button>
-      </ActionButtons>
-    </CenteredLayout>
+      <StatusPage
+        code="404"
+        title="Page not found"
+        description="The page you're looking for doesn't exist or has been moved."
+        actions={
+          <>
+            <Button asChild>
+              <Link href="/">Back to home</Link>
+            </Button>
+            <Button variant="outline" onClick={() => window.history.back()}>
+              Go back
+            </Button>
+          </>
+        }
+      />
+    </div>
   );
 }
-

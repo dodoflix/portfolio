@@ -63,16 +63,9 @@ describe('RootNotFound', () => {
     expect(mockHistoryBack).toHaveBeenCalledTimes(1);
   });
 
-  it('should display copyright footer', () => {
+  it('should have theme toggle', () => {
     render(<RootNotFound />);
-    expect(screen.getByText(/© \d{4} Portfolio/)).toBeInTheDocument();
-  });
-
-  it('should render theme toggle', () => {
-    render(<RootNotFound />);
-    // ThemeToggle renders a button
     const buttons = screen.getAllByRole('button');
     expect(buttons.length).toBeGreaterThanOrEqual(2); // ThemeToggle + Go back
   });
 });
-

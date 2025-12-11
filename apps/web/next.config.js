@@ -1,7 +1,13 @@
 const { composePlugins, withNx } = require('@nx/next');
 const createNextIntlPlugin = require('next-intl/plugin');
+const fs = require('fs');
 
-const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
+// Handle both Nx (workspace root) and Next.js (apps/web) execution contexts
+const i18nPath = fs.existsSync('./src/i18n/request.ts') 
+  ? './src/i18n/request.ts' 
+  : './apps/web/src/i18n/request.ts';
+
+const withNextIntl = createNextIntlPlugin(i18nPath);
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}

@@ -21,7 +21,14 @@ describe('Loading', () => {
 
   it('should be centered on the screen', () => {
     const { container } = render(<Loading />);
-    const mainDiv = container.firstChild as HTMLElement;
-    expect(mainDiv).toHaveClass('flex', 'min-h-screen', 'items-center', 'justify-center');
+    // FullCenter uses flex, items-center, justify-center
+    const centeringDiv = container.querySelector('.items-center.justify-center');
+    expect(centeringDiv).toBeInTheDocument();
+  });
+
+  it('should have min-h-screen for full height', () => {
+    const { container } = render(<Loading />);
+    const fullHeightDiv = container.querySelector('.min-h-screen');
+    expect(fullHeightDiv).toBeInTheDocument();
   });
 });

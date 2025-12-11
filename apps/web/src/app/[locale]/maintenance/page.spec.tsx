@@ -28,20 +28,20 @@ describe('MaintenancePage', () => {
     expect(svgIcon).toBeInTheDocument();
   });
 
-  it('should have animated pulse ring', () => {
+  it('should have animated status badge', () => {
     const { container } = render(<MaintenancePage />);
-    const pulseRing = container.querySelector('.animate-ping');
-    expect(pulseRing).toBeInTheDocument();
+    const pulseBadge = container.querySelector('.animate-pulse');
+    expect(pulseBadge).toBeInTheDocument();
   });
 
-  it('should display copyright footer', () => {
+  it('should display estimated completion text', () => {
     render(<MaintenancePage />);
-    expect(screen.getByText(/© \d{4} Portfolio/)).toBeInTheDocument();
+    expect(screen.getByText(/Estimated completion/)).toBeInTheDocument();
   });
 
-  it('should be centered on the screen', () => {
-    const { container } = render(<MaintenancePage />);
-    const mainDiv = container.firstChild as HTMLElement;
-    expect(mainDiv).toHaveClass('flex', 'min-h-screen', 'items-center', 'justify-center');
+  it('should have theme toggle', () => {
+    render(<MaintenancePage />);
+    const buttons = screen.getAllByRole('button');
+    expect(buttons.length).toBeGreaterThan(0);
   });
 });

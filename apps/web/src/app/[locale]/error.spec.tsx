@@ -7,6 +7,13 @@ const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(
   function noop() {}
 );
 
+// Mock window.history.back
+const mockHistoryBack = jest.fn();
+Object.defineProperty(window, 'history', {
+  value: { back: mockHistoryBack },
+  writable: true,
+});
+
 const mockError = new window.Error('Test error message');
 const mockReset = jest.fn();
 
@@ -14,6 +21,7 @@ describe('ErrorPage', () => {
   beforeEach(() => {
     mockReset.mockClear();
     mockConsoleError.mockClear();
+    mockHistoryBack.mockClear();
   });
 
   afterAll(() => {
@@ -23,6 +31,11 @@ describe('ErrorPage', () => {
   it('should render successfully', () => {
     const { baseElement } = render(<ErrorPage error={mockError} reset={mockReset} />);
     expect(baseElement).toBeTruthy();
+  });
+
+  it('should display 500 error code', () => {
+    render(<ErrorPage error={mockError} reset={mockReset} />);
+    expect(screen.getByText('500')).toBeInTheDocument();
   });
 
   it('should display title', () => {
@@ -64,7 +77,7 @@ describe('ErrorPage', () => {
     expect(goBackButton).toBeTruthy();
     if (goBackButton) {
       fireEvent.click(goBackButton);
-      expect(window.history.back).toHaveBeenCalled();
+      expect(mockHistoryBack).toHaveBeenCalled();
     }
   });
 
@@ -74,8 +87,9 @@ describe('ErrorPage', () => {
     expect(svgIcon).toBeInTheDocument();
   });
 
-  it('should display copyright footer', () => {
+  it('should have language switcher and theme toggle', () => {
     render(<ErrorPage error={mockError} reset={mockReset} />);
-    expect(screen.getByText(/© \d{4} Portfolio/)).toBeInTheDocument();
+    const buttons = screen.getAllByRole('button');
+    expect(buttons.length).toBeGreaterThanOrEqual(3); // LanguageSwitcher + ThemeToggle + tryAgain + goBack
   });
 });

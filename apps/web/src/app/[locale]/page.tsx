@@ -4,33 +4,49 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import {
+  // Core UI
   Badge,
   Button,
+  Card,
+  CardContent,
+  Separator,
+  // Core Primitives
+  VStack,
+  HStack,
+  Cluster,
+  Container,
+  // Core Atoms
   LanguageSwitcher,
   ThemeToggle,
+  Heading,
+  Text,
+  GradientText,
+  TypeWriter,
+  FadeIn,
+  LabeledProgress,
+  StatValue,
+  IconBox,
+  LinkButton,
+  GitHubIcon,
+  LinkedInIcon,
+  EmailIcon,
+  // Core Decorative
+  GradientBlob,
+  ScrollIndicator,
+  // Core Hooks
+  useScrollSpy,
+  // Components
   PageLayout,
   Section,
   Navbar,
   NavLink,
-  SideNav,
   Logo,
   Footer,
   Copyright,
-  Hero,
-  SectionHeader,
-  ProjectCard,
-  SkillBar,
-  TechBadge,
-  StatCard,
-  TypeWriter,
-  FadeIn,
-  Heading,
-  GradientText,
-  Text,
-  SocialLinks,
-  GitHubIcon,
-  LinkedInIcon,
-  EmailIcon,
+  // Compositions
+  HeroSection,
+  FeatureCard,
+  SectionNav,
 } from '@portfolio/ui';
 
 // Skills data (not translated - technical terms)
@@ -60,6 +76,9 @@ const projectTags = [
 export default function HomePage() {
   const [mounted, setMounted] = useState(false);
   const t = useTranslations();
+
+  const sectionIds = ['about', 'projects', 'skills', 'contact'];
+  const { activeId, scrollTo } = useScrollSpy({ sectionIds });
 
   useEffect(() => {
     setMounted(true);
@@ -96,22 +115,11 @@ export default function HomePage() {
     },
   ];
 
-  const socialLinks = [
-    {
-      name: t('contact.email'),
-      href: 'mailto:dogukanmetan@gmail.com',
-      icon: <EmailIcon />,
-    },
-    {
-      name: t('contact.github'),
-      href: 'https://github.com/dodoflix',
-      icon: <GitHubIcon />,
-    },
-    {
-      name: t('contact.linkedin'),
-      href: 'https://linkedin.com/in/dogukan-metan',
-      icon: <LinkedInIcon />,
-    },
+  const navSections = [
+    { id: 'about', label: t('nav.about') },
+    { id: 'projects', label: t('nav.projects') },
+    { id: 'skills', label: t('nav.skills') },
+    { id: 'contact', label: t('nav.contact') },
   ];
 
   return (
@@ -128,31 +136,26 @@ export default function HomePage() {
       />
 
       {/* Vertical Side Navigation */}
-      <SideNav
-        links={[
-          { href: '#about', label: t('nav.about') },
-          { href: '#projects', label: t('nav.projects') },
-          { href: '#skills', label: t('nav.skills') },
-          { href: '#contact', label: t('nav.contact') },
-        ]}
+      <SectionNav
+        sections={navSections}
+        activeId={activeId}
+        onSelect={scrollTo}
       />
 
       {/* Hero Section */}
-      <Hero
+      <HeroSection
         badge={
           <Badge variant="outline" className="px-4 py-1">
             {t('hero.badge')}
           </Badge>
         }
-        title={
+        headline={
           <FadeIn delay={100} duration={1000}>
             <span className="block">{t('hero.greeting')}</span>
             <GradientText>{t('hero.name')}</GradientText>
           </FadeIn>
         }
-        subtitle={
-          mounted && <TypeWriter words={roles} />
-        }
+        subheadline={mounted && <TypeWriter words={roles} />}
         description={t('hero.description')}
         actions={
           <>
@@ -164,50 +167,55 @@ export default function HomePage() {
             </Button>
           </>
         }
+        scrollTarget="about"
       />
 
       {/* About Section */}
       <Section id="about">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="space-y-6">
+          <VStack gap={6} align="start">
             <Badge variant="secondary">{t('about.badge')}</Badge>
             <Heading as="h2" size="xl">
               {t('about.title')}
             </Heading>
-            <div className="space-y-4">
+            <VStack gap={4}>
               <Text variant="muted">{t('about.description1')}</Text>
               <Text variant="muted">{t('about.description2')}</Text>
-            </div>
-            <div className="flex flex-wrap gap-2">
+            </VStack>
+            <Cluster gap={2}>
               {techStack.slice(0, 8).map((tech) => (
                 <Badge key={tech} variant="outline">{tech}</Badge>
               ))}
               <Badge variant="outline">{t('about.more', { count: techStack.length - 8 })}</Badge>
-            </div>
-          </div>
+            </Cluster>
+          </VStack>
 
-          <StatCard
-            variant="gradient"
-            icon="👨‍💻"
-            stats={[
-              { value: '5+', label: t('about.yearsExperience') },
-              { value: '50+', label: t('about.projectsCompleted') },
-            ]}
-          />
+          <Card className="aspect-square overflow-hidden bg-gradient-to-br from-primary/20 via-primary/10 to-transparent p-8">
+            <div className="flex h-full flex-col items-center justify-center space-y-4 rounded-xl border bg-card/50 backdrop-blur">
+              <IconBox icon="👨‍💻" size="xl" variant="ghost" />
+              <StatValue value="5+" label={t('about.yearsExperience')} size="lg" />
+              <Separator className="w-1/2" />
+              <StatValue value="50+" label={t('about.projectsCompleted')} size="lg" />
+            </div>
+          </Card>
         </div>
       </Section>
 
       {/* Projects Section */}
       <Section id="projects" variant="muted">
-        <SectionHeader
-          badge={t('projects.badge')}
-          title={t('projects.title')}
-          description={t('projects.description')}
-        />
+        <VStack gap={4} align="center" className="mb-12">
+          <Badge variant="secondary">{t('projects.badge')}</Badge>
+          <Heading as="h2" size="xl" className="text-center">
+            {t('projects.title')}
+          </Heading>
+          <Text variant="muted" className="text-center max-w-2xl">
+            {t('projects.description')}
+          </Text>
+        </VStack>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
-            <ProjectCard
+            <FeatureCard
               key={project.key}
               title={project.title}
               description={project.description}
@@ -229,43 +237,67 @@ export default function HomePage() {
 
       {/* Skills Section */}
       <Section id="skills">
-        <SectionHeader
-          badge={t('skills.badge')}
-          title={t('skills.title')}
-          description={t('skills.description')}
-        />
+        <VStack gap={4} align="center" className="mb-12">
+          <Badge variant="secondary">{t('skills.badge')}</Badge>
+          <Heading as="h2" size="xl" className="text-center">
+            {t('skills.title')}
+          </Heading>
+          <Text variant="muted" className="text-center max-w-2xl">
+            {t('skills.description')}
+          </Text>
+        </VStack>
 
         <div className="grid gap-8 md:grid-cols-2">
-          <div className="space-y-6">
+          <VStack gap={6}>
             {skills.map((skill) => (
-              <SkillBar
+              <LabeledProgress
                 key={skill.name}
-                name={skill.name}
-                level={skill.level}
+                label={skill.name}
+                value={skill.level}
                 animate={mounted}
               />
             ))}
-          </div>
+          </VStack>
 
-          <div className="flex flex-wrap content-start gap-3">
+          <Cluster gap={3} align="start">
             {techStack.map((tech) => (
-              <TechBadge key={tech}>{tech}</TechBadge>
+              <Badge 
+                key={tech} 
+                variant="outline"
+                className="px-4 py-2 transition-colors hover:bg-primary hover:text-primary-foreground"
+              >
+                {tech}
+              </Badge>
             ))}
-          </div>
+          </Cluster>
         </div>
       </Section>
 
       {/* Contact Section */}
       <Section id="contact" variant="muted">
-        <div className="mx-auto max-w-2xl text-center">
-          <SectionHeader
-            badge={t('contact.badge')}
-            title={t('contact.title')}
-            description={t('contact.description')}
-          />
+        <Container size="sm" className="text-center">
+          <VStack gap={4} align="center" className="mb-8">
+            <Badge variant="secondary">{t('contact.badge')}</Badge>
+            <Heading as="h2" size="xl">
+              {t('contact.title')}
+            </Heading>
+            <Text variant="muted">
+              {t('contact.description')}
+            </Text>
+          </VStack>
 
-          <SocialLinks links={socialLinks} variant="default" />
-        </div>
+          <Cluster gap={4} justify="center">
+            <LinkButton href="mailto:dogukanmetan@gmail.com" iconBefore={<EmailIcon />} external>
+              {t('contact.email')}
+            </LinkButton>
+            <LinkButton href="https://github.com/dodoflix" variant="outline" iconBefore={<GitHubIcon />} external>
+              {t('contact.github')}
+            </LinkButton>
+            <LinkButton href="https://linkedin.com/in/dogukan-metan" variant="outline" iconBefore={<LinkedInIcon />} external>
+              {t('contact.linkedin')}
+            </LinkButton>
+          </Cluster>
+        </Container>
       </Section>
 
       {/* Footer */}

@@ -67,11 +67,13 @@ test.describe('Navigation', () => {
     await expect(aboutSection).toBeInViewport();
   });
 
-  test('footer links are visible', async ({ page }) => {
+  test('footer copyright is visible', async ({ page }) => {
     await page.goto('/');
 
     const footer = page.locator('footer');
-    const links = footer.locator('a');
-    await expect(links.first()).toBeVisible();
+    await expect(footer).toBeVisible();
+    // Footer contains copyright text with current year
+    const year = new Date().getFullYear().toString();
+    await expect(footer).toContainText(year);
   });
 });

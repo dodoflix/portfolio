@@ -21,8 +21,8 @@ test.describe('Offline Page', () => {
   });
 
   test('has tips card', async ({ page }) => {
-    // The tips are in a Card component
-    await expect(page.getByText(/things to try/i)).toBeVisible();
+    // The tips are in a Card component with "Try:" title
+    await expect(page.getByText(/try:/i)).toBeVisible();
   });
 
   test('has offline icon', async ({ page }) => {

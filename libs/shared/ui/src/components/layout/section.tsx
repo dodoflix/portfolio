@@ -1,41 +1,42 @@
+'use client';
+
 import { forwardRef, HTMLAttributes } from 'react';
 import { cn } from '../../lib/utils';
+import { Container, ContainerSize } from '../../core/primitives/container';
+
+export type SectionSpacing = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+export type SectionVariant = 'default' | 'muted' | 'accent' | 'gradient';
 
 export interface SectionProps extends HTMLAttributes<HTMLElement> {
   /** Vertical spacing variant */
-  spacing?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
+  spacing?: SectionSpacing;
   /** Background variant */
-  variant?: 'default' | 'muted' | 'accent';
+  variant?: SectionVariant;
   /** Use container inside */
   container?: boolean;
   /** Container size when container is true */
-  containerSize?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  containerSize?: ContainerSize;
 }
 
-const spacingClasses = {
+const spacingClasses: Record<SectionSpacing, string> = {
   none: '',
+  xs: 'py-6',
   sm: 'py-12',
   md: 'py-16',
   lg: 'py-24',
   xl: 'py-32',
+  '2xl': 'py-40',
 };
 
-const variantClasses = {
+const variantClasses: Record<SectionVariant, string> = {
   default: '',
   muted: 'bg-muted/30',
   accent: 'bg-primary/5',
-};
-
-const containerSizeClasses = {
-  sm: 'max-w-2xl',
-  md: 'max-w-4xl',
-  lg: 'max-w-6xl',
-  xl: 'max-w-7xl',
-  full: 'max-w-full',
+  gradient: 'bg-gradient-to-b from-background to-muted/20',
 };
 
 /**
- * Section component for page sections
+ * Section component - composed from primitives
  */
 export const Section = forwardRef<HTMLElement, SectionProps>(
   (
@@ -57,9 +58,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
         {...props}
       >
         {container ? (
-          <div className={cn('mx-auto w-full px-4 sm:px-6 lg:px-8', containerSizeClasses[containerSize])}>
-            {children}
-          </div>
+          <Container size={containerSize}>{children}</Container>
         ) : (
           children
         )}
@@ -69,4 +68,3 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
 );
 
 Section.displayName = 'Section';
-

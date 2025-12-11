@@ -2,6 +2,9 @@
 
 import { forwardRef, HTMLAttributes, ReactNode } from 'react';
 import { cn } from '../../lib/utils';
+import { Stack, HStack } from '../../core/primitives/stack';
+import { Spacer } from '../../core/primitives/spacer';
+import { Container, ContainerSize } from '../../core/primitives/container';
 
 export interface NavbarProps extends HTMLAttributes<HTMLElement> {
   /** Logo/Brand element */
@@ -14,13 +17,23 @@ export interface NavbarProps extends HTMLAttributes<HTMLElement> {
   blur?: boolean;
   /** Show bottom border */
   bordered?: boolean;
+  /** Container size */
+  size?: ContainerSize;
+  /** Height class */
+  height?: 'sm' | 'md' | 'lg';
 }
 
 /** Height of the navbar in pixels */
 export const NAVBAR_HEIGHT = 64;
 
+const heightClasses = {
+  sm: 'h-12',
+  md: 'h-16',
+  lg: 'h-20',
+};
+
 /**
- * Navbar component for site navigation
+ * Navbar component - composed from primitives
  */
 export const Navbar = forwardRef<HTMLElement, NavbarProps>(
   (
@@ -31,6 +44,8 @@ export const Navbar = forwardRef<HTMLElement, NavbarProps>(
       fixed = true,
       blur = true,
       bordered = true,
+      size = 'lg',
+      height = 'md',
       children,
       ...props
     },
@@ -49,20 +64,23 @@ export const Navbar = forwardRef<HTMLElement, NavbarProps>(
           )}
           {...props}
         >
-          <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-            {logo}
-            <div className="flex items-center gap-6">
-              <div className="hidden items-center gap-6 sm:flex">{children}</div>
-              {actions}
-            </div>
-          </div>
+          <Container size={size} className={cn('flex items-center', heightClasses[height])}>
+            <Stack direction="horizontal" align="center" justify="between" className="w-full">
+              {logo}
+              <HStack gap={6} align="center">
+                <HStack gap={6} align="center" className="hidden sm:flex">
+                  {children}
+                </HStack>
+                {actions}
+              </HStack>
+            </Stack>
+          </Container>
         </nav>
         {/* Spacer to prevent content from being hidden under fixed navbar */}
-        {fixed && <div className="h-16" aria-hidden="true" />}
+        {fixed && <Spacer size={height === 'sm' ? 'md' : height === 'md' ? 'lg' : 'xl'} aria-hidden="true" />}
       </>
     );
   }
 );
 
 Navbar.displayName = 'Navbar';
-

@@ -1,5 +1,3 @@
-export * from './container';
+// Layout components
 export * from './section';
 export * from './page-layout';
-export * from './centered-layout';
-

@@ -8,11 +8,9 @@ import {
   Badge,
   Button,
   Card,
-  CardContent,
   Separator,
   // Core Primitives
   VStack,
-  HStack,
   Cluster,
   Container,
   // Core Atoms
@@ -30,16 +28,12 @@ import {
   GitHubIcon,
   LinkedInIcon,
   EmailIcon,
-  // Core Decorative
-  GradientBlob,
-  ScrollIndicator,
   // Core Hooks
   useScrollSpy,
   // Components
   PageLayout,
   Section,
   Navbar,
-  NavLink,
   Logo,
   Footer,
   Copyright,
@@ -305,12 +299,6 @@ export default function HomePage() {
         left={
           <>
             <Copyright name={t('hero.name')} /> {t('footer.rights')}
-          </>
-        }
-        right={
-          <>
-            <NavLink href="#">{t('footer.privacy')}</NavLink>
-            <NavLink href="#">{t('footer.terms')}</NavLink>
           </>
         }
       />

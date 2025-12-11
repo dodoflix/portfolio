@@ -11,7 +11,7 @@ import {
 export default function RootNotFound() {
   return (
     <div className="relative">
-      {/* Top right actions */}
+      {/* Top right actions - LanguageSwitcher excluded as this page is outside i18n context */}
       <div className="absolute top-4 right-4 z-50">
         <ThemeToggle />
       </div>

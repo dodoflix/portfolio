@@ -59,9 +59,6 @@ export const AnimatedLine = forwardRef<HTMLDivElement, AnimatedLineProps>(
   ) => {
     const lengthClasses = direction === 'horizontal' ? horizontalLengthClasses : verticalLengthClasses;
     const baseLengthClass = hoverExpand ? lengthClasses[expandFrom] : lengthClasses[length];
-    const hoverLengthClass = hoverExpand 
-      ? `group-hover:${direction === 'horizontal' ? 'w' : 'h'}-${length === 'lg' ? '16' : length === 'md' ? '8' : '4'}` 
-      : '';
 
     return (
       <div

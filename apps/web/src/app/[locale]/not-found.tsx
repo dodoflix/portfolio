@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import {
   Button,
+  LanguageSwitcher,
   ThemeToggle,
+  HStack,
   // Compositions
   StatusPage,
 } from '@portfolio/ui';
@@ -16,7 +18,10 @@ export default function NotFound() {
     <div className="relative">
       {/* Top right actions */}
       <div className="absolute top-4 right-4 z-50">
-        <ThemeToggle />
+        <HStack gap={2}>
+          <LanguageSwitcher />
+          <ThemeToggle />
+        </HStack>
       </div>
 
       <StatusPage

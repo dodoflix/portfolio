@@ -33,7 +33,6 @@ export function useScrollSpy({
   const [activeId, setActiveId] = useState<string>('');
 
   const handleScroll = useCallback(() => {
-    const scrollContainer = root || window;
     const viewportHeight = root?.clientHeight || window.innerHeight;
     const triggerPoint = viewportHeight * offset;
 

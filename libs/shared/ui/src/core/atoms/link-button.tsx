@@ -1,7 +1,6 @@
 'use client';
 
 import { forwardRef, AnchorHTMLAttributes, ReactNode } from 'react';
-import { cn } from '../../lib/utils';
 import { Button, ButtonProps } from '../ui/button';
 
 export interface LinkButtonProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'children'> {

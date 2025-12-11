@@ -36,7 +36,7 @@
  * ```
  */
 
-import { forwardRef, HTMLAttributes, ReactNode } from 'react';
+import { forwardRef, Fragment, HTMLAttributes, ReactNode } from 'react';
 import { cn } from '../../lib/utils';
 import { HStack } from '../../core/primitives/stack';
 import { Cluster } from '../../core/primitives/cluster';
@@ -94,8 +94,8 @@ export const StatsGrid = forwardRef<HTMLDivElement, StatsGridProps>(
           className={cn('grid gap-4', columnClasses[columns], className)}
           {...props}
         >
-          {stats.map((stat, index) => (
-            <Card key={index}>
+          {stats.map((stat) => (
+            <Card key={stat.label}>
               <CardContent className="pt-6">
                 <StatValue
                   value={stat.value}
@@ -121,9 +121,9 @@ export const StatsGrid = forwardRef<HTMLDivElement, StatsGridProps>(
           className={className}
           {...props}
         >
-          {stats.map((stat, index) => (
+          {stats.map((stat) => (
             <StatValue
-              key={index}
+              key={stat.label}
               value={stat.value}
               label={stat.label}
               prefix={stat.prefix}
@@ -147,12 +147,11 @@ export const StatsGrid = forwardRef<HTMLDivElement, StatsGridProps>(
         {...props}
       >
         {stats.map((stat, index) => (
-          <>
+          <Fragment key={stat.label}>
             {showSeparators && index > 0 && (
-              <Separator key={`sep-${index}`} orientation="vertical" className="h-12" />
+              <Separator orientation="vertical" className="h-12" />
             )}
             <StatValue
-              key={index}
               value={stat.value}
               label={stat.label}
               prefix={stat.prefix}
@@ -160,7 +159,7 @@ export const StatsGrid = forwardRef<HTMLDivElement, StatsGridProps>(
               trend={stat.trend}
               size={size}
             />
-          </>
+          </Fragment>
         ))}
       </HStack>
     );

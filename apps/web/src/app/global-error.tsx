@@ -16,11 +16,11 @@ export default function GlobalError({
 
   return (
     <html lang="en">
-      <body className="min-h-screen bg-neutral-50 dark:bg-neutral-950">
+      <body className="min-h-screen bg-background">
         <div className="flex min-h-screen flex-col items-center justify-center">
           <div className="flex flex-col items-center gap-8 text-center px-4">
             {/* Icon */}
-            <div className="flex h-24 w-24 items-center justify-center rounded-full bg-red-100 text-red-600 dark:bg-red-900/20 dark:text-red-400">
+            <div className="flex h-24 w-24 items-center justify-center rounded-full bg-destructive/10 text-destructive">
               <svg
                 className="h-12 w-12"
                 fill="none"
@@ -38,10 +38,10 @@ export default function GlobalError({
 
             {/* Message */}
             <div className="space-y-4">
-              <h1 className="text-4xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-5xl">
+              <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
                 Something went wrong
               </h1>
-              <p className="max-w-md text-lg text-neutral-600 dark:text-neutral-400">
+              <p className="max-w-md text-lg text-muted-foreground">
                 A critical error has occurred. Please try again.
               </p>
             </div>
@@ -49,14 +49,14 @@ export default function GlobalError({
             {/* Actions */}
             <button
               onClick={reset}
-              className="rounded-md bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200"
+              className="rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90"
             >
               Try again
             </button>
           </div>
 
           {/* Footer */}
-          <div className="absolute bottom-6 text-sm text-neutral-500">
+          <div className="absolute bottom-6 text-sm text-muted-foreground">
             © {new Date().getFullYear()} Portfolio
           </div>
         </div>

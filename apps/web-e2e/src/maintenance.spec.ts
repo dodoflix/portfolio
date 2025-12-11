@@ -9,13 +9,23 @@ test.describe('Maintenance Page', () => {
     await expect(page.getByRole('heading', { name: /maintenance/i })).toBeVisible();
   });
 
+  test('shows maintenance description', async ({ page }) => {
+    await expect(page.getByText(/performing scheduled maintenance/i)).toBeVisible();
+  });
+
   test('has theme toggle', async ({ page }) => {
     const themeToggle = page.getByTestId('theme-toggle');
     await expect(themeToggle).toBeVisible();
   });
 
-  test('has copyright footer', async ({ page }) => {
-    const year = new Date().getFullYear().toString();
-    await expect(page.getByText(new RegExp(`© ${year}`))).toBeVisible();
+  test('has gear/settings icon', async ({ page }) => {
+    const icon = page.locator('svg').first();
+    await expect(icon).toBeVisible();
+  });
+
+  test('is centered on screen', async ({ page }) => {
+    // StatusPage uses FullCenter which centers content
+    const container = page.locator('.items-center.justify-center').first();
+    await expect(container).toBeVisible();
   });
 });

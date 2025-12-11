@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
 import {
   Button,
   ThemeToggle,
@@ -13,9 +12,7 @@ import {
   Copyright,
 } from '@portfolio/ui';
 
-export default function NotFound() {
-  const t = useTranslations('notFound');
-
+export default function RootNotFound() {
   return (
     <CenteredLayout
       topRight={<ThemeToggle />}
@@ -23,17 +20,17 @@ export default function NotFound() {
     >
       <BigText text="404">
         <Heading as="h1" size="xl">
-          {t('title')}
+          Page not found
         </Heading>
       </BigText>
 
       <Text size="lg" variant="muted" className="max-w-md">
-        {t('description')}
+        The page you&apos;re looking for doesn&apos;t exist or has been moved.
       </Text>
 
       <ActionButtons>
         <Button asChild>
-          <Link href="/">{t('backHome')}</Link>
+          <Link href="/">Back to home</Link>
         </Button>
         <Button variant="outline" onClick={() => window.history.back()}>
           Go back
@@ -42,3 +39,4 @@ export default function NotFound() {
     </CenteredLayout>
   );
 }
+

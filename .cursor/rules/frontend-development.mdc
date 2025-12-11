@@ -1,0 +1,198 @@
+---
+description: Frontend development guidelines for the portfolio project
+globs:
+  - "apps/web/**/*.{ts,tsx}"
+  - "libs/shared/ui/**/*.{ts,tsx}"
+  - "**/*.css"
+---
+
+# Frontend Development Guidelines
+
+When working on frontend code in this project, follow these guidelines.
+
+## Tech Stack
+
+- **Framework:** Next.js 15 with App Router
+- **Styling:** Tailwind CSS v4
+- **Component Library:** Custom shared UI library (`@portfolio/ui`)
+- **Language:** TypeScript (strict mode)
+- **Internationalization:** next-intl
+- **Testing:** Vitest + React Testing Library
+
+## Component Architecture
+
+### Component Library Structure
+
+The shared UI library (`libs/shared/ui`) follows a layered architecture:
+
+1. **Core** (`core/`) - Independent building blocks
+   - `ui/` - Base Shadcn components
+   - `primitives/` - Layout primitives (Box, Stack, Grid)
+   - `atoms/` - Small composable units (GradientText, Icon, Heading)
+   - `decorative/` - Visual enhancements
+   - `hooks/` - Reusable logic
+   - `providers/` - Context providers
+
+2. **Components** (`components/`) - Composed UI
+   - `layout/` - Page layouts, containers
+   - `navigation/` - Navbar, footer, links
+   - `compositions/` - Pre-built patterns
+
+### Creating Components
+
+```tsx
+import { forwardRef, HTMLAttributes } from 'react';
+import { cn } from '../../lib/utils';
+
+export interface ComponentNameProps extends HTMLAttributes<HTMLDivElement> {
+  /** Prop description with JSDoc */
+  variant?: 'default' | 'secondary';
+}
+
+/**
+ * Component description
+ */
+export const ComponentName = forwardRef<HTMLDivElement, ComponentNameProps>(
+  ({ className, variant = 'default', children, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          'base-classes',
+          variant === 'secondary' && 'secondary-classes',
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
+
+ComponentName.displayName = 'ComponentName';
+```
+
+### Component Rules
+
+1. **Always use `forwardRef`** for components that render DOM elements
+2. **Always set `displayName`** for better debugging
+3. **Extend HTML attributes** for standard elements (`HTMLAttributes<HTMLDivElement>`)
+4. **Use `cn()` utility** for className merging (from `@portfolio/ui`)
+5. **Document props with JSDoc** comments
+6. **Spread remaining props** (`...props`) to allow flexibility
+7. **Place `className` last** in `cn()` to allow overrides
+
+## Styling Guidelines
+
+### Tailwind CSS v4
+
+- Theme is configured in `apps/web/src/app/global.css` using `@theme`
+- Use CSS variables for colors: `bg-background`, `text-foreground`, `border-border`
+- Dark mode uses `class` strategy with `.dark` selector
+
+### Color System
+
+Use semantic color tokens, not arbitrary values:
+
+```tsx
+// ✅ Good - semantic tokens
+<div className="bg-background text-foreground border-border" />
+<div className="bg-primary text-primary-foreground" />
+<div className="bg-muted text-muted-foreground" />
+
+// ❌ Bad - arbitrary colors
+<div className="bg-gray-100 text-gray-900" />
+<div className="bg-[#1a1a1a]" />
+```
+
+### Responsive Design
+
+Use Tailwind breakpoints consistently:
+- `sm:` - 640px
+- `md:` - 768px
+- `lg:` - 1024px
+- `xl:` - 1280px
+- `2xl:` - 1536px
+
+## Import Guidelines
+
+### From Shared UI Library
+
+```tsx
+// Import from barrel exports
+import { Button, Card, cn, GradientText, Heading } from '@portfolio/ui';
+
+// For testing utilities
+import { render, screen } from '@portfolio/ui/testing';
+```
+
+### Internal Imports
+
+```tsx
+// Use relative paths within the same library
+import { cn } from '../../lib/utils';
+```
+
+## Testing Requirements
+
+1. Create spec files alongside components: `component.tsx` → `component.spec.tsx`
+2. Use React Testing Library with Vitest
+3. Test accessibility, user interactions, and visual states
+
+```tsx
+import { render, screen } from '@testing-library/react';
+import { ComponentName } from './component-name';
+
+describe('ComponentName', () => {
+  it('renders children correctly', () => {
+    render(<ComponentName>Test</ComponentName>);
+    expect(screen.getByText('Test')).toBeInTheDocument();
+  });
+});
+```
+
+## Internationalization
+
+Use `next-intl` for all user-facing text:
+
+```tsx
+import { useTranslations } from 'next-intl';
+
+export function Component() {
+  const t = useTranslations('Namespace');
+  return <h1>{t('title')}</h1>;
+}
+```
+
+Translation files are in `apps/web/messages/{locale}.json`.
+
+## File Organization
+
+```
+apps/web/src/app/[locale]/
+├── page.tsx           # Page component
+├── page.spec.tsx      # Page tests
+├── layout.tsx         # Layout wrapper
+├── loading.tsx        # Loading state
+├── error.tsx          # Error boundary
+└── feature/
+    ├── page.tsx
+    └── components/    # Page-specific components
+```
+
+## Accessibility Requirements
+
+1. Use semantic HTML elements (`<nav>`, `<main>`, `<article>`, etc.)
+2. Include proper ARIA attributes where needed
+3. Ensure keyboard navigation works
+4. Maintain color contrast ratios
+5. Add alt text to images
+
+## Performance Best Practices
+
+1. Use `next/image` for images
+2. Prefer CSS animations over JavaScript
+3. Use `React.memo` sparingly and only when needed
+4. Lazy load below-the-fold content
+5. Mark client components with `'use client'` only when necessary

@@ -12,6 +12,7 @@ import {
   Section,
   Navbar,
   NavLink,
+  SideNav,
   Logo,
   Footer,
   Copyright,
@@ -124,12 +125,17 @@ export default function HomePage() {
             <ThemeToggle />
           </>
         }
-      >
-        <NavLink href="#about">{t('nav.about')}</NavLink>
-        <NavLink href="#projects">{t('nav.projects')}</NavLink>
-        <NavLink href="#skills">{t('nav.skills')}</NavLink>
-        <NavLink href="#contact">{t('nav.contact')}</NavLink>
-      </Navbar>
+      />
+
+      {/* Vertical Side Navigation */}
+      <SideNav
+        links={[
+          { href: '#about', label: t('nav.about') },
+          { href: '#projects', label: t('nav.projects') },
+          { href: '#skills', label: t('nav.skills') },
+          { href: '#contact', label: t('nav.contact') },
+        ]}
+      />
 
       {/* Hero Section */}
       <Hero

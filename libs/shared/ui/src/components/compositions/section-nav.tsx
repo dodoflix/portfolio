@@ -48,7 +48,7 @@ export interface SectionNavItem {
   label: string;
 }
 
-export interface SectionNavProps extends HTMLAttributes<HTMLElement> {
+export interface SectionNavProps extends Omit<HTMLAttributes<HTMLElement>, 'onSelect'> {
   /** Navigation sections */
   sections: SectionNavItem[];
   /** Currently active section ID */

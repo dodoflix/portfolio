@@ -47,7 +47,7 @@
 import { forwardRef, HTMLAttributes, ReactNode } from 'react';
 import { cn } from '../../lib/utils';
 import { FullCenter } from '../../core/primitives/center';
-import { RelativeBox, Overlay } from '../../core/primitives/overlay';
+import { RelativeBox } from '../../core/primitives/overlay';
 import { VStack, HStack } from '../../core/primitives/stack';
 import { DecorativeText, DecorativeTextSize } from '../../core/decorative/decorative-text';
 import { IconBox } from '../../core/atoms/icon-box';
@@ -90,39 +90,37 @@ export const StatusPage = forwardRef<HTMLDivElement, StatusPageProps>(
     return (
       <FullCenter
         ref={ref}
-        className={cn('min-h-screen px-4', className)}
+        className={cn('min-h-screen px-4 py-16', className)}
         {...props}
       >
-        <RelativeBox className="text-center">
+        <RelativeBox className="w-full max-w-2xl text-center">
           {/* Background code */}
           {code && <DecorativeText text={code} size={codeSize} />}
           
-          {/* Overlay content */}
-          <Overlay position="center">
-            <VStack align="center" gap={4}>
-              {icon && (
-                <IconBox icon={icon} size="xl" variant="ghost" />
-              )}
-              
-              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                {title}
-              </h1>
-              
-              {description && (
-                <p className="max-w-md text-muted-foreground">
-                  {description}
-                </p>
-              )}
-              
-              {actions && (
-                <HStack gap={4} justify="center" className="pt-4">
-                  {actions}
-                </HStack>
-              )}
-              
-              {children}
-            </VStack>
-          </Overlay>
+          {/* Content - using relative positioning for better layout */}
+          <VStack align="center" gap={4} className="relative z-10">
+            {icon && (
+              <IconBox icon={icon} size="xl" variant="ghost" />
+            )}
+            
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+              {title}
+            </h1>
+            
+            {description && (
+              <p className="max-w-md text-muted-foreground sm:text-lg">
+                {description}
+              </p>
+            )}
+            
+            {actions && (
+              <HStack gap={4} justify="center" wrap className="pt-4">
+                {actions}
+              </HStack>
+            )}
+            
+            {children}
+          </VStack>
         </RelativeBox>
       </FullCenter>
     );

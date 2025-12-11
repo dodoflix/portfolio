@@ -4,64 +4,132 @@ globs:
   - "apps/web/**/*.{ts,tsx}"
   - "libs/shared/ui/**/*.{ts,tsx}"
   - "**/*.css"
+alwaysApply: false
 ---
 
 # Frontend Development Guidelines
 
-When working on frontend code in this project, follow these guidelines.
+You are a senior frontend developer working on this portfolio project. Apply these principles and patterns consistently.
+
+## Core Philosophy
+
+1. **Composition over inheritance** - Build complex UIs by composing simple, focused components
+2. **Colocation** - Keep related code together (component + test + styles)
+3. **Explicit over implicit** - Prefer clear, readable code over clever abstractions
+4. **Progressive enhancement** - Start with Server Components, add client interactivity only when needed
+5. **Don't repeat yourself (DRY)** - But don't abstract prematurely; wait for the third occurrence
 
 ## Tech Stack
 
-- **Framework:** Next.js 15 with App Router
-- **Styling:** Tailwind CSS v4
-- **Component Library:** Custom shared UI library (`@portfolio/ui`)
-- **Language:** TypeScript (strict mode)
-- **Internationalization:** next-intl
-- **Testing:** Vitest + React Testing Library
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Next.js | 16 | Framework with App Router |
+| React | 19 | UI library |
+| TypeScript | ~5.9 | Type safety |
+| Tailwind CSS | v4 | Styling |
+| next-intl | 4.x | i18n |
+| Vitest | 4.x | Unit testing |
+| Playwright | - | E2E testing |
+
+---
 
 ## Component Architecture
 
-### Component Library Structure
+### Library Structure (`libs/shared/ui`)
 
-The shared UI library (`libs/shared/ui`) follows a layered architecture:
+```
+core/           → Independent, zero-dependency building blocks
+├── ui/         → Shadcn primitives (Button, Card, Badge, Dialog, etc.)
+├── primitives/ → Layout (Stack, HStack, VStack, Center, Cluster, Container, Spacer, Overlay)
+├── atoms/      → Composable units (Heading, Text, GradientText, Icon, FadeIn, TypeWriter, etc.)
+├── decorative/ → Visual flair (GradientBlob, ScrollIndicator, AnimatedLine)
+├── hooks/      → Logic (useScrollSpy, useIntersection)
+└── providers/  → Context (ThemeProvider)
 
-1. **Core** (`core/`) - Independent building blocks
-   - `ui/` - Base Shadcn components
-   - `primitives/` - Layout primitives (Box, Stack, Grid)
-   - `atoms/` - Small composable units (GradientText, Icon, Heading)
-   - `decorative/` - Visual enhancements
-   - `hooks/` - Reusable logic
-   - `providers/` - Context providers
+components/     → Composed from core pieces
+├── layout/     → PageLayout, Section
+├── navigation/ → Navbar, Footer, NavLink, Logo
+└── compositions/ → HeroSection, FeatureCard, StatsGrid, SectionNav, StatusPage
+```
 
-2. **Components** (`components/`) - Composed UI
-   - `layout/` - Page layouts, containers
-   - `navigation/` - Navbar, footer, links
-   - `compositions/` - Pre-built patterns
+### Component Creation Patterns
 
-### Creating Components
+#### Pattern 1: Server Component (Default)
+
+Use for static content, data fetching, SEO-critical content:
 
 ```tsx
-import { forwardRef, HTMLAttributes } from 'react';
+import { Heading, Text, VStack } from '@portfolio/ui';
+
+interface ArticleProps {
+  title: string;
+  content: string;
+}
+
+export function Article({ title, content }: ArticleProps) {
+  return (
+    <VStack as="article" gap={4}>
+      <Heading as="h1">{title}</Heading>
+      <Text variant="muted">{content}</Text>
+    </VStack>
+  );
+}
+```
+
+#### Pattern 2: Client Component with Interactivity
+
+Add `'use client'` ONLY when you need: hooks, event handlers, browser APIs, or context.
+
+```tsx
+'use client';
+
+import { forwardRef, HTMLAttributes, useState, useCallback } from 'react';
 import { cn } from '../../lib/utils';
 
-export interface ComponentNameProps extends HTMLAttributes<HTMLDivElement> {
-  /** Prop description with JSDoc */
-  variant?: 'default' | 'secondary';
+export interface ExpandableProps extends HTMLAttributes<HTMLDivElement> {
+  /** Initially expanded state */
+  defaultExpanded?: boolean;
+  /** Controlled expanded state */
+  expanded?: boolean;
+  /** Callback when expanded state changes */
+  onExpandedChange?: (expanded: boolean) => void;
 }
 
 /**
- * Component description
+ * Expandable container with smooth height animation.
+ * Supports both controlled and uncontrolled modes.
  */
-export const ComponentName = forwardRef<HTMLDivElement, ComponentNameProps>(
-  ({ className, variant = 'default', children, ...props }, ref) => {
+export const Expandable = forwardRef<HTMLDivElement, ExpandableProps>(
+  ({ 
+    className, 
+    defaultExpanded = false,
+    expanded: controlledExpanded,
+    onExpandedChange,
+    children, 
+    ...props 
+  }, ref) => {
+    // Support both controlled and uncontrolled modes
+    const [internalExpanded, setInternalExpanded] = useState(defaultExpanded);
+    const isControlled = controlledExpanded !== undefined;
+    const isExpanded = isControlled ? controlledExpanded : internalExpanded;
+
+    const toggle = useCallback(() => {
+      const newValue = !isExpanded;
+      if (!isControlled) {
+        setInternalExpanded(newValue);
+      }
+      onExpandedChange?.(newValue);
+    }, [isExpanded, isControlled, onExpandedChange]);
+
     return (
       <div
         ref={ref}
         className={cn(
-          'base-classes',
-          variant === 'secondary' && 'secondary-classes',
+          'overflow-hidden transition-all duration-300',
+          isExpanded ? 'max-h-screen' : 'max-h-0',
           className
         )}
+        aria-expanded={isExpanded}
         {...props}
       >
         {children}
@@ -70,129 +138,551 @@ export const ComponentName = forwardRef<HTMLDivElement, ComponentNameProps>(
   }
 );
 
-ComponentName.displayName = 'ComponentName';
+Expandable.displayName = 'Expandable';
 ```
 
-### Component Rules
+#### Pattern 3: Polymorphic Component (Advanced)
 
-1. **Always use `forwardRef`** for components that render DOM elements
-2. **Always set `displayName`** for better debugging
-3. **Extend HTML attributes** for standard elements (`HTMLAttributes<HTMLDivElement>`)
-4. **Use `cn()` utility** for className merging (from `@portfolio/ui`)
-5. **Document props with JSDoc** comments
-6. **Spread remaining props** (`...props`) to allow flexibility
-7. **Place `className` last** in `cn()` to allow overrides
+For components that can render as different elements:
+
+```tsx
+import { forwardRef, ElementType, ComponentPropsWithoutRef, ComponentPropsWithRef } from 'react';
+import { cn } from '../../lib/utils';
+
+type PolymorphicRef<C extends ElementType> = ComponentPropsWithRef<C>['ref'];
+
+type BoxProps<C extends ElementType = 'div'> = {
+  as?: C;
+  className?: string;
+} & Omit<ComponentPropsWithoutRef<C>, 'as' | 'className'>;
+
+type BoxComponent = <C extends ElementType = 'div'>(
+  props: BoxProps<C> & { ref?: PolymorphicRef<C> }
+) => JSX.Element | null;
+
+export const Box: BoxComponent = forwardRef(
+  <C extends ElementType = 'div'>(
+    { as, className, ...props }: BoxProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
+    const Component = as || 'div';
+    return <Component ref={ref} className={cn(className)} {...props} />;
+  }
+);
+```
+
+### Component Rules (Non-Negotiable)
+
+| Rule | Why |
+|------|-----|
+| Use `forwardRef` for DOM components | Enables ref forwarding for parent components |
+| Set `displayName` | DevTools debugging, error messages |
+| Extend HTML attributes | Flexibility, a11y props pass-through |
+| `cn()` with `className` last | Allows consumer overrides |
+| JSDoc on exported interfaces | IDE autocomplete, documentation |
+| Spread `...props` at the end | Forward aria-*, data-*, event handlers |
+
+### Anti-Patterns to Avoid
+
+```tsx
+// ❌ BAD: Inline object creation in render (causes re-renders)
+<Component style={{ margin: 10 }} config={{ theme: 'dark' }} />
+
+// ✅ GOOD: Hoist or memoize objects
+const style = { margin: 10 };
+const config = useMemo(() => ({ theme: 'dark' }), []);
+<Component style={style} config={config} />
+
+// ❌ BAD: Anonymous functions in render for simple handlers
+<Button onClick={() => setOpen(true)}>Open</Button>
+
+// ✅ GOOD: For simple state setters, this is actually fine in React 19
+// But for complex handlers, use useCallback:
+const handleSubmit = useCallback((e: FormEvent) => {
+  e.preventDefault();
+  // complex logic
+}, [dependencies]);
+
+// ❌ BAD: Prop drilling through many levels
+<App user={user}>
+  <Layout user={user}>
+    <Sidebar user={user}>
+      <UserMenu user={user} />
+
+// ✅ GOOD: Context for deeply shared state
+<UserProvider value={user}>
+  <App />  {/* Any child can useUser() */}
+
+// ❌ BAD: useEffect for derived state
+const [fullName, setFullName] = useState('');
+useEffect(() => {
+  setFullName(`${firstName} ${lastName}`);
+}, [firstName, lastName]);
+
+// ✅ GOOD: Compute during render
+const fullName = `${firstName} ${lastName}`;
+
+// ❌ BAD: Index as key for dynamic lists
+{items.map((item, index) => <Item key={index} />)}
+
+// ✅ GOOD: Stable, unique identifiers
+{items.map(item => <Item key={item.id} />)}
+```
+
+---
+
+## TypeScript Patterns
+
+### Discriminated Unions for Props
+
+```tsx
+// Instead of optional props that depend on each other:
+type ButtonProps = 
+  | { variant: 'link'; href: string; onClick?: never }
+  | { variant: 'button'; onClick: () => void; href?: never }
+  | { variant: 'submit'; onClick?: () => void; href?: never };
+```
+
+### Extract Component Props
+
+```tsx
+import { ComponentProps } from 'react';
+import { Button } from '@portfolio/ui';
+
+// Get props from existing component
+type ButtonProps = ComponentProps<typeof Button>;
+
+// Extend them
+interface MyButtonProps extends ButtonProps {
+  loading?: boolean;
+}
+```
+
+### Strict Event Handlers
+
+```tsx
+// Be specific about event types
+const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  e.preventDefault();
+};
+
+const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setValue(e.target.value);
+};
+
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+};
+```
+
+---
 
 ## Styling Guidelines
 
-### Tailwind CSS v4
+### Tailwind CSS v4 Conventions
 
-- Theme is configured in `apps/web/src/app/global.css` using `@theme`
-- Use CSS variables for colors: `bg-background`, `text-foreground`, `border-border`
-- Dark mode uses `class` strategy with `.dark` selector
+Theme variables are defined in `apps/web/src/app/global.css`:
 
-### Color System
+```css
+@theme {
+  --color-background: hsl(var(--background));
+  --color-primary: hsl(var(--primary));
+  /* etc. */
+}
+```
 
-Use semantic color tokens, not arbitrary values:
+### Semantic Color Tokens (Mandatory)
 
 ```tsx
-// ✅ Good - semantic tokens
-<div className="bg-background text-foreground border-border" />
+// ✅ CORRECT - Always use semantic tokens
+<div className="bg-background text-foreground" />
 <div className="bg-primary text-primary-foreground" />
 <div className="bg-muted text-muted-foreground" />
+<div className="bg-card border-border" />
+<div className="bg-destructive text-destructive-foreground" />
+<div className="text-accent-foreground" />
 
-// ❌ Bad - arbitrary colors
-<div className="bg-gray-100 text-gray-900" />
-<div className="bg-[#1a1a1a]" />
+// ❌ WRONG - Never use arbitrary colors
+<div className="bg-gray-100" />      // Use bg-muted
+<div className="text-gray-500" />    // Use text-muted-foreground
+<div className="bg-[#1a1a1a]" />     // Define in theme if needed
+<div className="text-blue-500" />    // Use semantic tokens
 ```
 
-### Responsive Design
+### Responsive Design Strategy
 
-Use Tailwind breakpoints consistently:
-- `sm:` - 640px
-- `md:` - 768px
-- `lg:` - 1024px
-- `xl:` - 1280px
-- `2xl:` - 1536px
-
-## Import Guidelines
-
-### From Shared UI Library
+Mobile-first approach. Base styles are mobile, add breakpoints for larger screens:
 
 ```tsx
-// Import from barrel exports
-import { Button, Card, cn, GradientText, Heading } from '@portfolio/ui';
-
-// For testing utilities
-import { render, screen } from '@portfolio/ui/testing';
+<div className="
+  flex flex-col gap-4           // Mobile: stack vertically
+  md:flex-row md:gap-8          // Tablet+: horizontal
+  lg:gap-12                     // Desktop: more spacing
+">
 ```
 
-### Internal Imports
+Breakpoints:
+- Base (0px) → Mobile
+- `sm:` (640px) → Large phones
+- `md:` (768px) → Tablets
+- `lg:` (1024px) → Desktop
+- `xl:` (1280px) → Large desktop
+- `2xl:` (1536px) → Extra large
+
+### Animation Guidelines
+
+Prefer CSS transitions over JavaScript animations:
 
 ```tsx
-// Use relative paths within the same library
-import { cn } from '../../lib/utils';
+// ✅ GOOD - CSS transition
+<div className="transition-all duration-300 hover:scale-105" />
+
+// ✅ GOOD - Tailwind animation
+<div className="animate-pulse" />
+
+// Use for complex orchestrated animations only
+import { motion } from 'framer-motion'; // If added to project
 ```
 
-## Testing Requirements
+---
 
-1. Create spec files alongside components: `component.tsx` → `component.spec.tsx`
-2. Use React Testing Library with Vitest
-3. Test accessibility, user interactions, and visual states
+## State Management
+
+### When to Use What
+
+| Scenario | Solution |
+|----------|----------|
+| Component-local UI state | `useState` |
+| Derived/computed values | Calculate during render |
+| Form state | `react-hook-form` (already installed) |
+| Cross-component state | Context + `useContext` |
+| Server state / caching | Server Components + fetch |
+| URL state | `useSearchParams`, `usePathname` |
+
+### State Lifting Decision Tree
+
+1. Does only ONE component need this state? → Keep it local
+2. Do SIBLINGS need it? → Lift to parent
+3. Do DISTANT components need it? → Context or URL state
+4. Is it URL-representable (filters, pagination)? → URL state
+
+---
+
+## Error Handling
+
+### Component Error Boundaries
+
+Next.js App Router uses `error.tsx` files:
 
 ```tsx
-import { render, screen } from '@testing-library/react';
+'use client';
+
+import { useEffect } from 'react';
+import { Button, StatusPage } from '@portfolio/ui';
+import { AlertTriangle } from 'lucide-react';
+
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  useEffect(() => {
+    // Log to error reporting service
+    console.error('Page error:', error);
+  }, [error]);
+
+  return (
+    <StatusPage
+      code="500"
+      icon={<AlertTriangle className="h-16 w-16 text-destructive" />}
+      title="Something went wrong"
+      description={error.message}
+      actions={<Button onClick={reset}>Try again</Button>}
+    />
+  );
+}
+```
+
+### Async Error Handling
+
+```tsx
+// In Server Components - errors bubble to error.tsx
+async function getData() {
+  const res = await fetch('/api/data');
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  return res.json();
+}
+
+// In Client Components - handle locally or throw
+const handleSubmit = async () => {
+  try {
+    await submitForm(data);
+    toast.success('Saved!');
+  } catch (error) {
+    toast.error(error instanceof Error ? error.message : 'Failed to save');
+  }
+};
+```
+
+---
+
+## Testing Strategy
+
+### Test File Location
+
+```
+component.tsx      → component.spec.tsx (unit)
+page.tsx           → page.spec.tsx (unit)
+apps/web-e2e/      → E2E tests (Playwright)
+```
+
+### What to Test
+
+| Test Type | What to Cover |
+|-----------|---------------|
+| Unit | Component renders, props work, className merges |
+| Integration | User flows, form submissions, navigation |
+| E2E | Critical paths, a11y, cross-browser |
+
+### Testing Patterns
+
+```tsx
+import { render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi } from 'vitest';
 import { ComponentName } from './component-name';
 
 describe('ComponentName', () => {
-  it('renders children correctly', () => {
-    render(<ComponentName>Test</ComponentName>);
-    expect(screen.getByText('Test')).toBeInTheDocument();
+  // Test default rendering
+  it('renders with default props', () => {
+    render(<ComponentName>Content</ComponentName>);
+    expect(screen.getByText('Content')).toBeInTheDocument();
+  });
+
+  // Test prop variations
+  it.each([
+    ['primary', 'bg-primary'],
+    ['secondary', 'bg-secondary'],
+  ])('applies %s variant classes', (variant, expectedClass) => {
+    render(<ComponentName variant={variant} data-testid="component" />);
+    expect(screen.getByTestId('component')).toHaveClass(expectedClass);
+  });
+
+  // Test user interactions
+  it('calls onClick when clicked', async () => {
+    const user = userEvent.setup();
+    const handleClick = vi.fn();
+    
+    render(<ComponentName onClick={handleClick}>Click me</ComponentName>);
+    await user.click(screen.getByText('Click me'));
+    
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  // Test accessibility
+  it('has correct ARIA attributes', () => {
+    render(<ComponentName aria-label="Test component" role="button" />);
+    expect(screen.getByRole('button')).toHaveAccessibleName('Test component');
+  });
+
+  // Test className override
+  it('allows className override', () => {
+    render(<ComponentName className="custom-class" data-testid="component" />);
+    expect(screen.getByTestId('component')).toHaveClass('custom-class');
   });
 });
 ```
 
-## Internationalization
-
-Use `next-intl` for all user-facing text:
+### Testing Hooks
 
 ```tsx
+import { renderHook, act } from '@testing-library/react';
+import { useScrollSpy } from './use-scroll-spy';
+
+describe('useScrollSpy', () => {
+  it('returns active section id', () => {
+    const { result } = renderHook(() => 
+      useScrollSpy({ sectionIds: ['about', 'contact'] })
+    );
+    
+    expect(result.current.activeId).toBeDefined();
+  });
+});
+```
+
+---
+
+## Internationalization (i18n)
+
+### Translation Structure
+
+```
+apps/web/messages/
+├── en.json    # English (default)
+└── tr.json    # Turkish
+```
+
+### Usage in Components
+
+```tsx
+'use client';
+
 import { useTranslations } from 'next-intl';
 
-export function Component() {
-  const t = useTranslations('Namespace');
-  return <h1>{t('title')}</h1>;
+export default function ContactSection() {
+  const t = useTranslations('contact');
+  
+  return (
+    <section>
+      <h2>{t('title')}</h2>
+      <p>{t('description')}</p>
+      <p>{t('items', { count: 5 })}</p> {/* Pluralization */}
+    </section>
+  );
 }
 ```
 
-Translation files are in `apps/web/messages/{locale}.json`.
+### Translation File Format
 
-## File Organization
-
-```
-apps/web/src/app/[locale]/
-├── page.tsx           # Page component
-├── page.spec.tsx      # Page tests
-├── layout.tsx         # Layout wrapper
-├── loading.tsx        # Loading state
-├── error.tsx          # Error boundary
-└── feature/
-    ├── page.tsx
-    └── components/    # Page-specific components
+```json
+{
+  "contact": {
+    "title": "Get in Touch",
+    "description": "I'd love to hear from you",
+    "items": "{count, plural, one {# item} other {# items}}"
+  }
+}
 ```
 
-## Accessibility Requirements
+---
 
-1. Use semantic HTML elements (`<nav>`, `<main>`, `<article>`, etc.)
-2. Include proper ARIA attributes where needed
-3. Ensure keyboard navigation works
-4. Maintain color contrast ratios
-5. Add alt text to images
+## Performance Checklist
 
-## Performance Best Practices
+### Before Shipping
 
-1. Use `next/image` for images
-2. Prefer CSS animations over JavaScript
-3. Use `React.memo` sparingly and only when needed
-4. Lazy load below-the-fold content
-5. Mark client components with `'use client'` only when necessary
+- [ ] Images use `next/image` with proper `width`/`height` or `fill`
+- [ ] No unnecessary `'use client'` directives
+- [ ] Large dependencies are dynamically imported
+- [ ] Lists > 50 items use virtualization
+- [ ] Animations use CSS transforms (not layout properties)
+- [ ] No layout shift (CLS) - elements have explicit dimensions
+
+### Server vs Client Components
+
+```tsx
+// ✅ Server Component (default) - Use for:
+// - Static content
+// - Data fetching
+// - Access to backend resources
+// - SEO-critical content
+// - Large dependencies (they don't ship to client)
+
+// 🔶 Client Component - Use ONLY for:
+// - useState, useEffect, useContext
+// - Event handlers (onClick, onChange)
+// - Browser APIs (window, document, localStorage)
+// - Third-party client libraries
+```
+
+### Dynamic Imports
+
+```tsx
+import dynamic from 'next/dynamic';
+
+// Heavy component - load only when needed
+const HeavyChart = dynamic(() => import('./HeavyChart'), {
+  loading: () => <div className="h-64 animate-pulse bg-muted" />,
+  ssr: false, // If it uses browser APIs
+});
+```
+
+---
+
+## Accessibility (a11y) Requirements
+
+### Mandatory Checks
+
+| Element | Requirement |
+|---------|-------------|
+| Images | `alt` text (empty `alt=""` for decorative) |
+| Buttons | Visible text or `aria-label` |
+| Links | Descriptive text (not "click here") |
+| Forms | Labels linked to inputs |
+| Headings | Logical hierarchy (h1 → h2 → h3) |
+| Color | 4.5:1 contrast ratio minimum |
+| Focus | Visible focus indicators |
+
+### Patterns
+
+```tsx
+// Skip link for keyboard users
+<a href="#main-content" className="sr-only focus:not-sr-only">
+  Skip to content
+</a>
+
+// Announce dynamic content
+<div aria-live="polite" aria-atomic="true">
+  {statusMessage}
+</div>
+
+// Hide decorative elements
+<Icon aria-hidden="true" />
+
+// Accessible loading states
+<Button disabled aria-busy={isLoading}>
+  {isLoading ? 'Saving...' : 'Save'}
+</Button>
+```
+
+---
+
+## Security Considerations
+
+### XSS Prevention
+
+```tsx
+// ❌ DANGEROUS - Never use dangerouslySetInnerHTML with user input
+<div dangerouslySetInnerHTML={{ __html: userInput }} />
+
+// ✅ SAFE - React escapes by default
+<div>{userInput}</div>
+
+// ✅ SAFE - If HTML is needed, sanitize first
+import DOMPurify from 'dompurify';
+<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }} />
+```
+
+### External Links
+
+```tsx
+// Always add rel="noopener noreferrer" for external links
+<a href={externalUrl} target="_blank" rel="noopener noreferrer">
+  External Link
+</a>
+
+// Or use the LinkButton component which handles this
+<LinkButton href={externalUrl} external>
+  External Link
+</LinkButton>
+```
+
+---
+
+## Code Review Checklist
+
+Before submitting PR, verify:
+
+- [ ] No TypeScript errors (`pnpm nx run-many -t typecheck`)
+- [ ] Tests pass (`pnpm nx run-many -t test`)
+- [ ] Lint passes (`pnpm nx run-many -t lint`)
+- [ ] New components have tests
+- [ ] New components have JSDoc
+- [ ] New user-facing text is in translation files
+- [ ] Accessibility: keyboard navigable, proper ARIA
+- [ ] Responsive: tested on mobile/tablet/desktop
+- [ ] Dark mode: tested in both themes
+- [ ] No console errors or warnings
